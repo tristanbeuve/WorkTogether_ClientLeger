@@ -15,4 +15,14 @@ class UniteController extends AbstractController
             'controller_name' => 'UniteController',
         ]);
     }
+
+    #[Route('/unite', name: 'app_vos_unite')]
+    public function list(): Response
+    {
+        return $this->render('unite/userUnites.html.twig', [
+            'controller_name' => 'UniteController',
+        ]);
+    }
+
+
 }
