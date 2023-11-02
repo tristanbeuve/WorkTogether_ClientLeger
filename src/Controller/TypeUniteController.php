@@ -11,7 +11,6 @@ class TypeUniteController extends AbstractController
     #[Route('/type/unite', name: 'app_type_unite')]
     public function index(): Response
     {
-        $estconnecte = $this->isGranted('ROLE_USER');
         return $this->render('type_unite/index.html.twig', [
             'controller_name' => 'TypeUniteController',
         ]);

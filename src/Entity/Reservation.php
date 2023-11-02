@@ -25,14 +25,18 @@ class Reservation
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateEnd = null;
 
-    #[ORM\OneToMany(mappedBy: 'IdentifiantReservation', targetEntity: Facturation::class)]
-    private Collection $facturations;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Abonnement $IdentifiantAbonnement = null;
 
     #[ORM\OneToMany(mappedBy: 'IdentifiantReservation', targetEntity: Unite::class)]
     private Collection $unites;
+
+    #[ORM\Column]
+    private ?bool $ren_auto = null;
+
+    #[ORM\Column]
+    private ?int $quantity = null;
 
     public function __construct()
     {
@@ -89,27 +93,6 @@ class Reservation
         return $this->facturations;
     }
 
-    public function addFacturation(Facturation $facturation): static
-    {
-        if (!$this->facturations->contains($facturation)) {
-            $this->facturations->add($facturation);
-            $facturation->setIdentifiantReservation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFacturation(Facturation $facturation): static
-    {
-        if ($this->facturations->removeElement($facturation)) {
-            // set the owning side to null (unless already changed)
-            if ($facturation->getIdentifiantReservation() === $this) {
-                $facturation->setIdentifiantReservation(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getIdentifiantAbonnement(): ?Abonnement
     {
@@ -149,6 +132,30 @@ class Reservation
                 $unite->setIdentifiantReservation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isRenAuto(): ?bool
+    {
+        return $this->ren_auto;
+    }
+
+    public function setRenAuto(bool $ren_auto): static
+    {
+        $this->ren_auto = $ren_auto;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): static
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

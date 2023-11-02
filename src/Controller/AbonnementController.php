@@ -11,8 +11,7 @@ class AbonnementController extends AbstractController
     #[Route('/abonnement', name: 'app_abonnement')]
     public function index(): Response
     {
-        $estconnecte = $this->isGranted('ROLE_USER');
-        return $this->render('abonnement/index.html.twig', [
+                return $this->render('abonnement/index.html.twig', [
             'controller_name' => 'AbonnementController',
         ]);
     }

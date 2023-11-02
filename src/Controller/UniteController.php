@@ -22,7 +22,7 @@ class UniteController extends AbstractController
 
         return $this->render('unite/index.html.twig', [
             'unites' => $unites,
-            'baies' => $baies
+            'baies' => $baies,
         ]);
     }
 

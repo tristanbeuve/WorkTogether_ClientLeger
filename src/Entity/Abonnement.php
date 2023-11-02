@@ -21,11 +21,18 @@ class Abonnement
     #[ORM\Column]
     private ?int $prix = null;
 
-    #[ORM\Column]
-    private ?bool $renAuto = null;
 
     #[ORM\OneToMany(mappedBy: 'IdentifiantAbonnement', targetEntity: Reservation::class)]
     private Collection $reservations;
+
+    #[ORM\Column]
+    private ?int $nbr_emplacement = null;
+
+    #[ORM\Column]
+    private ?int $reduction = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $img_path = null;
 
     public function __construct()
     {
@@ -61,18 +68,6 @@ class Abonnement
         return $this;
     }
 
-    public function isRenAuto(): ?bool
-    {
-        return $this->renAuto;
-    }
-
-    public function setRenAuto(bool $renAuto): static
-    {
-        $this->renAuto = $renAuto;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Reservation>
      */
@@ -99,6 +94,42 @@ class Abonnement
                 $reservation->setIdentifiantAbonnement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNbrEmplacement(): ?int
+    {
+        return $this->nbr_emplacement;
+    }
+
+    public function setNbrEmplacement(int $nbr_emplacement): static
+    {
+        $this->nbr_emplacement = $nbr_emplacement;
+
+        return $this;
+    }
+
+    public function getReduction(): ?int
+    {
+        return $this->reduction;
+    }
+
+    public function setReduction(int $reduction): static
+    {
+        $this->reduction = $reduction;
+
+        return $this;
+    }
+
+    public function getImgPath(): ?string
+    {
+        return $this->img_path;
+    }
+
+    public function setImgPath(?string $img_path): static
+    {
+        $this->img_path = $img_path;
 
         return $this;
     }
