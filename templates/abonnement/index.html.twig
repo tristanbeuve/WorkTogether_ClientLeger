@@ -9,7 +9,7 @@
     <h1>Abonnements</h1>
     <h1>Abonnements</h1>
     {% if is_granted('ROLE_ADMIN') %}
-        <a class="btn btn-success" href="{{ url('app_unite_new') }}">Ajouter</a>
+{#        <a class="btn btn-success" href="{{ url('app_abonnement_new') }}">Ajouter</a>#}
     {% endif %}
 
     <div class="container">
@@ -34,11 +34,11 @@
                             {% endif %}
                             <dt>Nombre d'emplacements</dt>
                             <dd>{{ abo.NbrEmplacement }}</dd>
-                            <a class="btn btn-outline-primary" id="reserver" href="#">Choisir cet abonnemment</a>
+{#                            <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_abonnement_selected') }}">Choisir cet abonnemment</a>#}
                         </blockquote>
 
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a class="btn btn-danger" href="#">Archiver</a>
+{#                            <a class="btn btn-danger" href="{{ url('app_abonnement_remove') }}">Archiver</a>#}
                         {% endif %}
                     </div>
                 </div>

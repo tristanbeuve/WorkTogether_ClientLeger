@@ -10,8 +10,8 @@
     <h1>Unités</h1>
     {% if is_granted('ROLE_ADMIN') %}
         <div class="crud">
-            <a class="btn btn-success" href="{{ url('app_unite_new') }}">Ajouter</a>
-            <a class="btn btn-danger" href="#">Archiver</a>
+{#            <a class="btn btn-success" href="{{ url('app_baie_new') }}">Ajouter</a>#}
+{#            <a class="btn btn-danger" href="{{ url('app_baie_remove') }}">Archiver</a>#}
         </div>
     {% endif %}
     <div class="container">
@@ -39,12 +39,12 @@
                                     <dd>complete</dd>
                                 {% else %}
                                     <dd>libre</dd>
-                                    <a class="btn btn-outline-primary" id="reserver" href="#">Réserver</a>
+{#                                    <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_make_reservation') }}">Réserver</a>#}
                                 {% endif %}
                             </blockquote>
+{#                            <a class="btn btn-danger" href="{{ url('app_unite_remove') }}"><i class="bi bi-dash"></i></a>#}
                         {% endfor %}
-                        <a class="btn btn-danger" href="#"><i class="bi bi-dash"></i></a>
-                        <a href="{{ url('app_unite_details') }}" class="btn btn-primary" id="detail">Détails</a>
+{#                        <a href="{{ url('app_unite_details') }}" class="btn btn-primary" id="detail">Détails</a>#}
                     </div>
                 </div>
             {% endfor %}
