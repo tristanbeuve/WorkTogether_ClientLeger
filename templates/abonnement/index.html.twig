@@ -7,41 +7,43 @@
 {% block body %}
 
     <h1>Abonnements</h1>
+    <h1>Abonnements</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-success" href="{{ url('app_unite_new') }}">Ajouter</a>
+    {% endif %}
 
     <div class="container">
-{#        {% for baie in baies %}#}
-            <div class="card" style="width: 30rem;">
-                <div class="card-header">
-{#                    Baie N°{{ baie.id }} / Statut : {% if baie.status == 0 %}#}
-{#                        complete {% else %}#}
-{#                        libre#}
-{#                    {% endif %}#}
-{#                    / Nombre d'Unités : {{ baie.NbrEmplacement }}#}
-                </div>
-                <div class="card-body">
-{#                    {% for unite in unites %}#}
-                        <blockquote class="blockquote mb-{{ unite.numero }}">
-                            <dt>Unité N°{{ unite.numero }}</dt>
-                            <dt>Status</dt>
-{#                            {% if unite.status == 0 %}#}
-                                <dd>complete</dd>
-{#                            {% else %}#}
-                                <dd>libre</dd>
-                                <a class="btn btn-outline-primary" id="reserver" href="#">Réserver</a>
-{#                            {% endif %}#}
+        <div class="carte">
+            {% for abo in abonnements %}
+                <div class="card" style="width: 20rem;">
+                    <img src="img/abos/{{ abo.ImgPath }}" class="card-img-top">
+                    <div class="card-header">
+                        {{ abo.nom }}
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-3">
+                            <dt>Prix</dt>
+                            {% if abo.reduction != 0 %}
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    -{{ abo.reduction }}% </span>
+                                {% set reduc = (abo.reduction/100) * abo.prix %}
+                                {% set prix = abo.prix - reduc %}
+                                <dd>{{ prix }} €/mois</dd>
+                            {% else %}
+                                <dd>{{ abo.prix }} €/mois</dd>
+                            {% endif %}
+                            <dt>Nombre d'emplacements</dt>
+                            <dd>{{ abo.NbrEmplacement }}</dd>
+                            <a class="btn btn-outline-primary" id="reserver" href="#">Choisir cet abonnemment</a>
                         </blockquote>
-{#                    {% endfor %}#}
-                    <a href="{{ url('app_unite_details') }}" class="btn btn-primary" id="detail">Détails</a>
 
-{#                    {% if estConnecte %}#}
-                        <div class="crud">
-                            <a class="btn btn-success" href="{{ url('app_unite_new') }}">Ajouter</a>
+                        {% if is_granted('ROLE_ADMIN') %}
                             <a class="btn btn-danger" href="#">Archiver</a>
-                        </div>
-{#                    {% endif %}#}
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-{#        {% endfor %}#}
+            {% endfor %}
+        </div>
     </div>
 
 {% endblock %}

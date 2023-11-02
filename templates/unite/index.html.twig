@@ -8,40 +8,47 @@
     <h1>Unités</h1>
 
     <h1>Unités</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="crud">
+            <a class="btn btn-success" href="{{ url('app_unite_new') }}">Ajouter</a>
+            <a class="btn btn-danger" href="#">Archiver</a>
+        </div>
+    {% endif %}
     <div class="container">
-        {% for baie in baies %}
-            <div class="card" style="width: 30rem;">
-                <div class="card-header">
-                    Baie N°{{ baie.id }} / Statut : {% if baie.status == 0 %}
-                        complete {% else %}
-                        libre
-                    {% endif %}
-                    / Nombre d'Unités : {{ baie.NbrEmplacement }}
+        <div class="carte">
+            {% for baie in baies %}
+                <div class="card" style="width: 30rem;">
+                    <div class="card-header">
+                        Baie N°{{ baie.id }} / Statut : {% if baie.status == 0 %}
+                            complete {% else %}
+                            libre
+                        {% endif %}
+                        / Nombre d'Unités : {{ baie.NbrEmplacement }}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="crud">
+                                <a class="btn btn-success" href="{{ url('app_unite_new') }}"><i class="bi bi-plus"></i></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        {% for unite in unites %}
+                            <blockquote class="blockquote mb-{{ unite.numero }}">
+                                <dt>Unité N°{{ unite.numero }}</dt>
+                                <dt>Status</dt>
+                                {% if unite.status == 0 %}
+                                    <dd>complete</dd>
+                                {% else %}
+                                    <dd>libre</dd>
+                                    <a class="btn btn-outline-primary" id="reserver" href="#">Réserver</a>
+                                {% endif %}
+                            </blockquote>
+                        {% endfor %}
+                        <a class="btn btn-danger" href="#"><i class="bi bi-dash"></i></a>
+                        <a href="{{ url('app_unite_details') }}" class="btn btn-primary" id="detail">Détails</a>
+                    </div>
                 </div>
-                <div class="card-body">
-                    {% for unite in unites %}
-                        <blockquote class="blockquote mb-{{ unite.numero }}">
-                            <dt>Unité N°{{ unite.numero }}</dt>
-                            <dt>Status</dt>
-                            {% if unite.status == 0 %}
-                                <dd>complete</dd>
-                            {% else %}
-                                <dd>libre</dd>
-                                <a class="btn btn-outline-primary" id="reserver" href="#">Réserver</a>
-                            {% endif %}
-                        </blockquote>
-                    {% endfor %}
-                    <a href="{{ url('app_unite_details') }}" class="btn btn-primary" id="detail">Détails</a>
-
-                    {% if estConnecte %}
-                        <div class="crud">
-                            <a class="btn btn-success" href="{{ url('app_unite_new') }}">Ajouter</a>
-                            <a class="btn btn-danger" href="#">Archiver</a>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 
     {#    <dl> #}

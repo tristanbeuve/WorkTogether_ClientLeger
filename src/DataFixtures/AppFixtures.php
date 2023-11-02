@@ -29,20 +29,23 @@ class AppFixtures extends Fixture
         $abonnement1->setPrix(49.99);
         $abonnement1->setNbrEmplacement(10);
         $abonnement1->setReduction(0.0);
+        $abonnement1->setImgPath("Standard.webp");
         $manager->persist($abonnement1);
 
         $abonnement2 = new Abonnement();
         $abonnement2->setNom('Abonnement Premium');
         $abonnement2->setPrix(99.99);
         $abonnement2->setNbrEmplacement(20);
-        $abonnement2->setReduction(0.10); // 10% de réduction
+        $abonnement2->setReduction(10); // 10% de réduction
+        $abonnement2->setImgPath("Premium.webp");
         $manager->persist($abonnement2);
 
         $abonnement3 = new Abonnement();
         $abonnement3->setNom('Abonnement Entreprise');
         $abonnement3->setPrix(199.99);
         $abonnement3->setNbrEmplacement(50);
-        $abonnement3->setReduction(0.20); // 20% de réduction
+        $abonnement3->setReduction(20); // 20% de réduction
+        $abonnement3->setImgPath("Entreprise.webp");
         $manager->persist($abonnement3);
 
         // Flush pour enregistrer les objets
@@ -67,20 +70,22 @@ class AppFixtures extends Fixture
 
         // Créez des données de test pour la table "client"
         $client1 = new User();
-        $client1->setUsername('admin');
+//        $client1->setUsername('admin');
         $client1->setEmail('admin@admin.com');
-        $client1->setName('Nom1');
-        $client1->setFirstname('Prénom1');
+//        $client1->setName('Nom1');
+//        $client1->setFirstname('Prénom1');
         $client1->setPassword('Not24get');
-        $client1->setRole('ROLE_ADMIN');
+        $client1->setRoles(['ROLE_ADMIN']);
+//
 
         $client2 = new User();
-        $client2->setUsername('client');
+//        $client2->setUsername('client');
         $client2->setEmail('client@client.com');
-        $client2->setName('Nom2');
-        $client2->setFirstname('Prénom2');
+//        $client2->setName('Nom2');
+//        $client2->setFirstname('Prénom2');
         $client2->setPassword('Not24get');
-        $client2->setRole('ROLE_USER');
+        $client2->setRoles(['ROLE_USER']);
+//
 
         // Persistez les objets dans la base de données
         $manager->persist($client1);
