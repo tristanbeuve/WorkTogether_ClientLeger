@@ -37,13 +37,21 @@
                         Espace Client
                     </a>
                     <ul class="dropdown-menu">
-{#                        <li><a class="dropdown-item" href="{{ url('app_userpage') }}">Votre Profil</a></li>#}
-                        <li><a class="dropdown-item" href="{{ url('app_facturation') }}">Facturation</a></li>
-                        <li><a class="dropdown-item" href="{{ url('app_vos_unite') }}">Vos Unités</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        {% block estconnecte %}{% endblock %}
+                        {% if estConnecte %}
+
+                            <li><a class="dropdown-item" href="{{ url('app_registration') }}">Créer un Compte</a></li>
+                            <li><a class="dropdown-item" href="{{ url('app_login') }}">Se connecter</a></li>
+                        {% else %}
+
+                            {#                        <li><a class="dropdown-item" href="{{ url('app_userpage') }}">Votre Profil</a></li>#}
+                            <li><a class="dropdown-item" href="{{ url('app_facturation') }}">Facturations</a></li>
+                            <li><a class="dropdown-item" href="{{ url('app_vos_unite') }}">Vos Unités</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Se déconnecter</a></li>
+                        {% endif %}
+{#                        {% block estconnecte %}{% endblock %}#}
                     </ul>
                 </li>
             </ul>

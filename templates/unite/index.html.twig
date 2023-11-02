@@ -1,20 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UniteController!{% endblock %}
+{% block title %}Unités{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Unités</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container">
+        {% for baie in baies %}
+            <div class="card" style="width: 30rem;">
+                <div class="card-header">
+                    Baie N°{{ baie.id }} / Statut : {% if baie.status == 0 %}
+                        complete {% else %}
+                        libre
+                    {% endif %}
+                    / Nombre d'Unités : {{ baie.NbrEmplacement }}
+                </div>
+                <div class="card-body">
+                    {% for unite in unites %}
+                        <blockquote class="blockquote mb-{{ unite.numero }}">
+                            <dt>Unité N°{{ unite.numero }}</dt>
+                            <dt>Status</dt>
+                            {% if unite.status == 0 %}
+                                <dd>complete</dd>
+                            {% else %}
+                                <dd>libre</dd>
+                            {% endif %}
+                        </blockquote>
+                    {% endfor %}
+                    <a href="{{ url('app_unite_details') }}" class="btn btn-primary">Détails</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+<a class="btn btn-success" href="{{ url('app_unite_new') }}">Ajouter</a>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/trist/Documents/PPE/Projet/PPE/src/Controller/UniteController.php'|file_link(0) }}">src/Controller/UniteController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/trist/Documents/PPE/Projet/PPE/templates/unite/index.html.twig'|file_link(0) }}">templates/unite/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {#    <dl> #}
+    {#        {% for unite in unites %} #}
+    {#            <dt>Id</dt> #}
+    {#            <dd>{{ unite.id }}</dd> #}
+    {#            <dt>Status</dt> #}
+    {#            {% if unite.status == 0 %} #}
+    {#                <dd>complete</dd> #}
+    {#            {% else %} #}
+    {#                <dd>libre</dd> #}
+    {#            {% endif %} #}
+    {#            #}{#            <dt>Type</dt> #}
+    {#            #}{#            <dd>{{ unite.gettype_unite() }}</dd> #}
+    {#        {% endfor %} #}
+    {#    </dl> #}
 {% endblock %}

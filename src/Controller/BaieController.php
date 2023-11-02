@@ -11,6 +11,7 @@ class BaieController extends AbstractController
     #[Route('/baie', name: 'app_baie')]
     public function index(): Response
     {
+        $estconnecte = $this->isGranted('ROLE_USER');
         return $this->render('baie/index.html.twig', [
             'controller_name' => 'BaieController',
         ]);

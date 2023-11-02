@@ -101,13 +101,13 @@ class AppFixtures extends Fixture
         $facturation1->setDateDeb(new \DateTime('2023-10-01'));
         $facturation1->setDateEnd(new \DateTime('2023-10-31'));
         $facturation1->setPrix(1500);
-        $facturation1->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 1]));
+        $facturation1->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 5]));
 
         $facturation2 = new Facturation();
         $facturation2->setDateDeb(new \DateTime('2023-11-01'));
         $facturation2->setDateEnd(new \DateTime('2023-11-30'));
         $facturation2->setPrix(2000);
-        $facturation2->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 2]));
+        $facturation2->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 6]));
 
         // Persistez les objets dans la base de données
         $manager->persist($facturation1);
@@ -121,13 +121,13 @@ class AppFixtures extends Fixture
         $reservation1->setNumero(001);
         $reservation1->setDateDeb(new \DateTime('2023-10-15'));
         $reservation1->setDateEnd(new \DateTime('2023-10-20'));
-        $reservation1->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['id' => 1]));
+        $reservation1->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['id' => 5]));
 
         $reservation2 = new Reservation();
         $reservation2->setNumero(002);
         $reservation2->setDateDeb(new \DateTime('2023-11-01'));
         $reservation2->setDateEnd(new \DateTime('2023-11-10'));
-        $reservation2->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['id' => 2]));
+        $reservation2->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['id' => 6]));
 
         // Persistez les objets dans la base de données
         $manager->persist($reservation1);
@@ -154,16 +154,16 @@ class AppFixtures extends Fixture
         $unite1 = new Unite();
         $unite1->setNumero(001);
         $unite1->setStatus(true);
-        $unite1->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 1]));
-        $unite1->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => 1]));
-        $unite1->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id' => 1]));
+        $unite1->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 5]));
+        $unite1->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => 5]));
+        $unite1->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id' => 5]));
 
         $unite2 = new Unite();
         $unite2->setNumero(002);
         $unite2->setStatus(false);
-        $unite2->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 2]));
-        $unite2->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => 2]));
-        $unite2->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id' => 2]));
+        $unite2->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 6]));
+        $unite2->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => 6]));
+        $unite2->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id' => 6]));
 
         // Persistez les objets dans la base de données
         $manager->persist($unite1);
