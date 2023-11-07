@@ -4,6 +4,7 @@ body {
     font-family: 'Raleway', sans-serif;
     background-color: white;
     text-align: center;
+    overflow: hidden;
 }
 
 .navi{
@@ -15,4 +16,18 @@ body {
 h2{
     font-family: 'Raleway', sans-serif;
     font-weight: 500;
+}
+
+.background-image {
+    position: fixed;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+/* gestions des images*/
+
+#bg_home{
+    /*background-image: url('../../public/img/');*/
 }
