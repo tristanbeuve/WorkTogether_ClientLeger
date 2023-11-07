@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Repository\BaieRepository;
 
 class UniteController extends AbstractController
 {
@@ -26,54 +27,60 @@ class UniteController extends AbstractController
         ]);
     }
 
-    #[Route('/vos_unites', name: 'app_vos_unite')]
-    public function list(EntityManagerInterface $em, int $id): Response
-    {
-        $unite = $em->getRepository(Unite::class)->find($id);
 
-        return $this->render('unite/userUnite.html.twig', [
-            'unite' => $unite,
-        ]);
-    }
-
-
-    #[Route('/unite/detail', name: 'app_unite_details')]
-    public function detail(EntityManagerInterface $em, Request $request): Response
-    {
-        $id = $request->query->getInt('id');
-        $unite = $em->getRepository(Unite::class)->find($id);
-
-        return $this->render('unite/userUnite.html.twig', [
-            'unite' => $unite,
-            'id' => $id,
-        ]);
-    }
-
+//    #[Route('/vos_unites', name: 'app_vos_unite')]
+//    public function list(EntityManagerInterface $em, int $id): Response
+//    {
+//        $unite = $em->getRepository(Unite::class)->find($id);
+//
+//        return $this->render('unite/userUnite.html.twig', [
+//            'unite' => $unite,
+//        ]);
+//    }
+//
+//
+//    #[Route('/unite/detail', name: 'app_unite_details')]
+//    public function detail(EntityManagerInterface $em, Request $request): Response
+//    {
+//        $id = $request->query->getInt('id');
+//        $unite = $em->getRepository(Unite::class)->find($id);
+//
+//        return $this->render('unite/userUnite.html.twig', [
+//            'unite' => $unite,
+//            'id' => $id,
+//        ]);
+//    }
+//
 //    #[IsGranted('ROLE_ADMIN')]
-    #[Route('/unite/new', name: 'app_unite_new')]
-    public function new(EntityManagerInterface $em, Request $request): Response
-    {
-        $unite = new Unite();
-
-        $form = $this->createForm(UniteType::class, $unite);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $unite = $form->getData();
-            $em->persist($unite);
-            $em->flush();
-            $this->addFlash(
-                'success',
-                "Ajout d'unité effectuée"
-            );
-//            return $this->redirectToRoute("app_quiz_details", ["id" =>
-//                $vehicle->getId()
+//    #[Route('/unite/new', name: 'app_unite_new')]
+//    public function new(EntityManagerInterface $em, Request $request): Response
+//    {
+//        $unite = new Unite();
+//
+//        $form = $this->createForm(UniteType::class, $unite);
+//
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $unite = $form->getData();
+//            $em->persist($unite);
+//            $em->flush();
+//            $this->addFlash(
+//                'success',
+//                "Ajout d'unité effectuée"
+//            );
+//            $unites = $em->getRepository(Unite::class)->findAll();
+//            $baies = $em->getRepository(Baie::class)->findAll();
+//            return $this->render("unite/index.html.twig", [
+//                'unites' => $unites,
+//                'baies' => $baies,
 //            ]);
-        }
-
-        return $this->render('unite/new.html.twig', [
-            'form' => $form
-        ]);
-    }
-
+//        }
+//
+//        return $this->render('unite/new.html.twig', [
+//            'form' => $form
+//        ]);
+//    }
+//
+//
+//
 }

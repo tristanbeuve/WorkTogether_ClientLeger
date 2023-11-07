@@ -6,44 +6,59 @@
 
 {% block body %}
 
-    <h1>Abonnements</h1>
-    <h1>Abonnements</h1>
+    <h2>Abonnements</h2>
+    <h3>Découvrez Nos Offres d'Abonnement</h3>
+        <h4>Chez WorkTogether, nous proposons trois formules d'abonnement flexibles pour répondre à vos besoins de stockage de données. Voici un aperçu de nos offres :
+        </h4>
+
     {% if is_granted('ROLE_ADMIN') %}
-{#        <a class="btn btn-success" href="{{ url('app_abonnement_new') }}">Ajouter</a>#}
+        {#        <a class="btn btn-success" href="{{ url('app_abonnement_new') }}">Ajouter</a> #}
     {% endif %}
 
     <div class="container">
-        <div class="carte">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for abo in abonnements %}
-                <div class="card" style="width: 20rem;">
-                    <img src="img/abos/{{ abo.ImgPath }}" class="card-img-top">
-                    <div class="card-header">
-                        {{ abo.nom }}
-                    </div>
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-3">
-                            <dt>Prix</dt>
-                            {% if abo.reduction != 0 %}
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <div class="col">
+                    <div class="card text-center mb-3" style="width: 20rem;">
+                        <img src="img/abos/{{ abo.ImgPath }}" class="card-img-top">
+                        <div class="card-img-overlay">
+                            <h3>{{ abo.nom }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-3">
+                                <dt>Prix</dt>
+                                {% if abo.reduction != 0 %}
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
     -{{ abo.reduction }}% </span>
-                                {% set reduc = (abo.reduction/100) * abo.prix %}
-                                {% set prix = abo.prix - reduc %}
-                                <dd>{{ prix }} €/mois</dd>
-                            {% else %}
-                                <dd>{{ abo.prix }} €/mois</dd>
-                            {% endif %}
-                            <dt>Nombre d'emplacements</dt>
-                            <dd>{{ abo.NbrEmplacement }}</dd>
-{#                            <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_abonnement_selected') }}">Choisir cet abonnemment</a>#}
-                        </blockquote>
+                                    {% set reduc = (abo.reduction/100) * abo.prix %}
+                                    {% set prix = abo.prix - reduc %}
+                                    <dd>
+                                        <strike style="color: red;">{{ abo.prix }} €/mois</strike> | {{ prix }} €/mois</dd>
+                                {% else %}
+                                    <dd>{{ abo.prix }} €/mois</dd>
+                                {% endif %}
+                                <dt>Nombre d'emplacements</dt>
+                                <dd>{{ abo.NbrEmplacement }}</dd>
+                                {#                            <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_abonnement_selected') }}">Choisir cet abonnemment</a> #}
+                                <dt>Idéal pour :</dt>
+                                <dd>{{ abo.description }}</dd>
+                            </blockquote>
 
-                        {% if is_granted('ROLE_ADMIN') %}
-{#                            <a class="btn btn-danger" href="{{ url('app_abonnement_remove') }}">Archiver</a>#}
-                        {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {#                            <a class="btn btn-danger" href="{{ url('app_abonnement_remove') }}">Archiver</a> #}
+                            {% endif %}
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-body-secondary">Utilisé par XX Utilisateur(s)</small>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+    <p>
+        Toutes nos offres d'abonnement comprennent un support clientèle exceptionnel, des mesures de sécurité avancées et un accès rapide à vos données. Choisissez la formule qui correspond le mieux à vos besoins et contactez-nous pour commencer votre abonnement BaieLoc dès aujourd'hui.
 
+        N'hésitez pas à personnaliser davantage ces informations pour correspondre à votre entreprise et à vos offres spécifiques.
+    </p>
 {% endblock %}

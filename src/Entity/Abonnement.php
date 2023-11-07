@@ -34,6 +34,9 @@ class Abonnement
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $img_path = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
@@ -130,6 +133,18 @@ class Abonnement
     public function setImgPath(?string $img_path): static
     {
         $this->img_path = $img_path;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

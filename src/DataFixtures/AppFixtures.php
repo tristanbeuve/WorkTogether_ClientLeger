@@ -30,6 +30,7 @@ class AppFixtures extends Fixture
         $abonnement1->setNbrEmplacement(10);
         $abonnement1->setReduction(0.0);
         $abonnement1->setImgPath("Standard.webp");
+        $abonnement1->setDescription("Un abonnement adapté aux petites entreprises, idéal pour le stockage de données de base et la gestion de projets personnels.");
         $manager->persist($abonnement1);
 
         $abonnement2 = new Abonnement();
@@ -38,6 +39,7 @@ class AppFixtures extends Fixture
         $abonnement2->setNbrEmplacement(20);
         $abonnement2->setReduction(10); // 10% de réduction
         $abonnement2->setImgPath("Premium.webp");
+        $abonnement2->setDescription("Un abonnement idéal pour les entreprises de taille moyenne, offrant un stockage de données avancé et favorisant la collaboration au sein des équipes.");
         $manager->persist($abonnement2);
 
         $abonnement3 = new Abonnement();
@@ -46,6 +48,7 @@ class AppFixtures extends Fixture
         $abonnement3->setNbrEmplacement(50);
         $abonnement3->setReduction(20); // 20% de réduction
         $abonnement3->setImgPath("Entreprise.webp");
+        $abonnement3->setDescription("Un abonnement idéal pour les grandes entreprises avec des besoins de haute performance et un stockage de données intensif.");
         $manager->persist($abonnement3);
 
         // Flush pour enregistrer les objets

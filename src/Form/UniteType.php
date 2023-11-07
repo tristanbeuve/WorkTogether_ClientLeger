@@ -20,21 +20,24 @@ class UniteType extends AbstractType
             ->add('numero', null, [
                 "label" => "Numéro"
             ])
-            ->add('status', null, [
-                "label" => "Statut"
-            ])
             ->add('IdentifiantTypeUnite', EntityType::class, [
                 'class' => TypeUnite::class,
-                "label" => "Type"
+                "label" => "Type",
+                'choice_label'=>'nom',
             ])
             ->add('IdentifiantBaie', EntityType::class, [
                 "class" => Baie::class,
-                "label" => "Numéro de Baie"
+                "label" => "Numéro de Baie",
+                'choice_label'=>'id',
             ])
-            ->add('IdentifiantReservation', EntityType::class, [
-                'class' => Reservation::class,
-                "label" => "Reservation"
+            ->add('status', null, [
+                "label" => "Statut"
             ])
+//            ->add('IdentifiantReservation', EntityType::class, [
+//                'class' => Reservation::class,
+//                "label" => "Reservation",
+//                'choice_label'=>'name',
+//            ])
             ->add('submit', SubmitType::class)
         ;
     }

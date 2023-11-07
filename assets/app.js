@@ -5,9 +5,9 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-// any CSS you import will output into a single css file (app.scss in this case)
-import "./styles/app.scss";
+// any CSS you import will output into a single css file (app.css in this case)
+import "./styles/app.css";
+import "./styles/style.css";
 import "bootstrap/dist/js/bootstrap.min";
 import "./scripts/script.js";
-//import "./styles/style.css";
 import "@fortawesome/fontawesome-free/js/all.min";

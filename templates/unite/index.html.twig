@@ -5,46 +5,87 @@
 {% set isSecurityPage = false %}
 
 {% block body %}
-    <h1>Unités</h1>
 
-    <h1>Unités</h1>
+    <h2>Unités</h2>
+
+    <h3>Il y a XX Baies et XX Unités de libres !</h3>
+    <h4>Profitez-en !</h4>
+
+    <h5>Baies de Stockage : Votre Solution de Stockage de Données</h5>
+    <p class="intro">Les baies de stockage sont des dispositifs de stockage de données essentiels pour les entreprises
+        de toutes tailles. Elles sont conçues pour stocker, organiser et protéger vos données de manière efficace. Voici
+        quelques détails clés sur nos baies de stockage :
+    </p>
+    <p class="Quest">À quoi ça sert ?</p>
+    <ol>
+        <li>Stockage sécurisé : Nos baies vous offrent un espace sécurisé pour conserver vos données sensibles.</li>
+        <li> Sauvegarde automatique : Vous pouvez automatiser les sauvegardes pour éviter la perte de données.</li>
+        <li>Accès rapide :Accédez à vos données en quelques secondes, améliorant ainsi votre productivité.</li>
+    </ol>
+    <p class="Quest">Qui peut s'en servir ?</p>
+    <ol>
+        <li>Entreprises de toutes tailles : Des petites entreprises aux grandes corporations, nos baies s'adaptent à vos
+            besoins.
+        </li>
+        <li>
+            Professionnels de l'informatique : Les experts en informatique peuvent bénéficier de la flexibilité et de la
+            fiabilité de nos baies.
+        </li>
+        <li>
+            Utilités : Stockage de données critiques : Protégez vos données commerciales essentielles.
+        </li>
+        <li>
+            Hébergement de sites web : Assurez la disponibilité constante de vos sites web.
+        </li>
+        <li>
+            Applications gourmandes en données : Idéales pour les applications qui nécessitent beaucoup d'espace de
+            stockage.
+        </li>
+        <li>
+            Contactez-nous dès aujourd'hui pour en savoir plus sur la façon dont nos baies de stockage peuvent améliorer
+            votre entreprise.
+        </li>
+    </ol>
+    </ol>
     {% if is_granted('ROLE_ADMIN') %}
         <div class="crud">
-{#            <a class="btn btn-success" href="{{ url('app_baie_new') }}">Ajouter</a>#}
-{#            <a class="btn btn-danger" href="{{ url('app_baie_remove') }}">Archiver</a>#}
+            {#            <a class="btn btn-success" href="{{ url('app_baie_new') }}">Ajouter</a> #}
+            {#            <a class="btn btn-danger" href="{{ url('app_baie_remove') }}">Archiver</a> #}
         </div>
     {% endif %}
     <div class="container">
-        <div class="carte">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for baie in baies %}
-                <div class="card" style="width: 30rem;">
-                    <div class="card-header">
-                        Baie N°{{ baie.id }} / Statut : {% if baie.status == 0 %}
-                            complete {% else %}
-                            libre
-                        {% endif %}
-                        / Nombre d'Unités : {{ baie.NbrEmplacement }}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <div class="crud">
-                                <a class="btn btn-success" href="{{ url('app_unite_new') }}"><i class="bi bi-plus"></i></a>
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="card-body">
-                        {% for unite in unites %}
-                            <blockquote class="blockquote mb-{{ unite.numero }}">
-                                <dt>Unité N°{{ unite.numero }}</dt>
-                                <dt>Status</dt>
-                                {% if unite.status == 0 %}
-                                    <dd>complete</dd>
-                                {% else %}
-                                    <dd>libre</dd>
-{#                                    <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_make_reservation') }}">Réserver</a>#}
-                                {% endif %}
-                            </blockquote>
-{#                            <a class="btn btn-danger" href="{{ url('app_unite_remove') }}"><i class="bi bi-dash"></i></a>#}
-                        {% endfor %}
-{#                        <a href="{{ url('app_unite_details') }}" class="btn btn-primary" id="detail">Détails</a>#}
+                <div class="col">
+                    <div class="card text-center mb-3" style="width: 30rem;">
+                        <div class="card-header">
+                            Baie N°{{ baie.id }} / Statut : {% if baie.status == 0 %}
+                                complete {% else %}
+                                libre
+                            {% endif %}
+                            / Nombre d'Unités : {{ baie.NbrEmplacement }}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="crud">
+                                    {#                                <a class="btn btn-success" href="{{ url('app_unite_new') }}"><i class="bi bi-plus"></i></a> #}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            {% for unite in unites %}
+                                <blockquote class="blockquote mb-{{ unite.numero }}">
+                                    <dt>Unité N°{{ unite.numero }}</dt>
+                                    <dt>Status</dt>
+                                    {% if unite.status == 0 %}
+                                        <dd>libre</dd>
+                                    {% else %}
+                                        <dd>complete</dd>
+                                        {#                                    <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_make_reservation') }}">Réserver</a> #}
+                                    {% endif %}
+                                </blockquote>
+                                {#                            <a class="btn btn-danger" href="{{ url('app_unite_remove') }}"><i class="bi bi-dash"></i></a> #}
+                            {% endfor %}
+                            {#                        <a href="{{ url('app_unite_details') }}" class="btn btn-primary" id="detail">Détails</a> #}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
