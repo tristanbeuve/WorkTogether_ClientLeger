@@ -16,8 +16,9 @@ use App\Repository\BaieRepository;
 class UniteController extends AbstractController
 {
     #[Route('/unite', name: 'app_unite')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(EntityManagerInterface $em, BaieRepository $br): Response
     {
+        $baiedispo = $br->findByDispo(1);
         $unites = $em->getRepository(Unite::class)->findAll();
         $baies = $em->getRepository(Baie::class)->findAll();
 
