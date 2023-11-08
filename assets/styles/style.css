@@ -1,10 +1,11 @@
+/*Gestion des pages en Générale*/
+
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap');
 
 body {
     font-family: 'Raleway', sans-serif;
     background-color: white;
-    text-align: center;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .navi{
@@ -18,16 +19,31 @@ h2{
     font-weight: 500;
 }
 
-.background-image {
-    position: fixed;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
+.intro{
+    position: relative;
+    text-align: center;
 }
 
-/* gestions des images*/
+.content{
+    text-align: center;
+    justify-content: center;
 
-#bg_home{
-    /*background-image: url('../../public/img/');*/
 }
+
+
+/* Gestion des pages d'Unités*/
+
+
+/* Gestions des images*/
+
+/*.background-image {*/
+/*    position: fixed;*/
+/*    width: 100%;*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*    height: 100vh;*/
+/*}*/
+
+/*#bg_home{*/
+/*    !*background-image: url('../../public/img/');*!*/
+/*}*/
