@@ -7,6 +7,7 @@ use App\Entity\Admin;
 use App\Entity\Baie;
 use App\Entity\Client;
 //use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Entity\Renouvellement;
 use App\Entity\Reservation;
 use App\Entity\TypeUnite;
 use App\Entity\Unite;
@@ -24,6 +25,15 @@ class AppFixtures extends Fixture
 //    }
     public function load(ObjectManager $manager): void
     {
+        $renouvellement1 = new Renouvellement();
+        $renouvellement1->setNom('Mois');
+        $renouvellement2 = new Renouvellement();
+        $renouvellement2->setNom('An');
+        $manager->persist($renouvellement1);
+        $manager->persist($renouvellement2);
+        $manager->flush();
+
+
         $abonnement1 = new Abonnement();
         $abonnement1->setNom('Abonnement Standard');
         $abonnement1->setPrix(49.99);
@@ -105,6 +115,7 @@ class AppFixtures extends Fixture
         $reservation1->setDateEnd(new \DateTime('2023-10-20'));
         $reservation1->setRenAuto(0);
         $reservation1->setQuantity(5);
+        $reservation1->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['id' => 1]));
         $reservation1->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => 199]));
 
         $reservation2 = new Reservation();
@@ -113,6 +124,7 @@ class AppFixtures extends Fixture
         $reservation2->setDateEnd(new \DateTime('2023-11-10'));
         $reservation2->setRenAuto(1);
         $reservation2->setQuantity(1);
+        $reservation2->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['id' => 2]));
         $reservation2->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => 99]));
 
         $reservation3 = new Reservation();
@@ -121,6 +133,7 @@ class AppFixtures extends Fixture
         $reservation3->setDateEnd(new \DateTime('2023-12-15'));
         $reservation3->setRenAuto(0);
         $reservation3->setQuantity(20);
+        $reservation3->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['id' => 2]));
         $reservation3->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => 49]));
 
         // Persistez les objets dans la base de données

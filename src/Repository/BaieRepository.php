@@ -24,16 +24,16 @@ class BaieRepository extends ServiceEntityRepository
 //    /**
 //     * @return Baie[] Returns an array of Baie objects
 //     */
-    public function findByDispo($value): array
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.status = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+//    public function findByDispo($value): array
+//    {
+//        return $this->createQueryBuilder('b')
+//            ->andWhere('b.status = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('b.id', 'ASC')
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
 
 //    public function findOneBySomeField($value): ?Baie
 //    {

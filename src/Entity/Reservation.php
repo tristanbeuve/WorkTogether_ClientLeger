@@ -38,6 +38,10 @@ class Reservation
     #[ORM\Column]
     private ?int $quantity = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Renouvellement $Renouvellement = null;
+
     public function __construct()
     {
         $this->facturations = new ArrayCollection();
@@ -83,14 +87,6 @@ class Reservation
         $this->dateEnd = $dateEnd;
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Facturation>
-     */
-    public function getFacturations(): Collection
-    {
-        return $this->facturations;
     }
 
 
@@ -156,6 +152,18 @@ class Reservation
     public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getRenouvellement(): ?Renouvellement
+    {
+        return $this->Renouvellement;
+    }
+
+    public function setRenouvellement(?Renouvellement $Renouvellement): static
+    {
+        $this->Renouvellement = $Renouvellement;
 
         return $this;
     }

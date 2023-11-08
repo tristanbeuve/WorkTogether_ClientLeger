@@ -45,7 +45,6 @@
                                 {% endif %}
                                 <dt>Nombre d'emplacements</dt>
                                 <dd>{{ abo.NbrEmplacement }}</dd>
-                                {#                            <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_abonnement_selected') }}">Choisir cet abonnemment</a> #}
                                 <dt>Idéal pour :</dt>
                                 <dd>{{ abo.description }}</dd>
                             </blockquote>
@@ -58,6 +57,7 @@
                             <small class="text-body-secondary">Utilisé par XX Utilisateur(s)</small>
                         </div>
                     </div>
+                    <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_new_reservation') }}">Choisir cet abonnemment</a>
                 </div>
             {% endfor %}
         </div>
