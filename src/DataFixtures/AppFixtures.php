@@ -87,7 +87,7 @@ class AppFixtures extends Fixture
         $client1->setEmail('admin@admin.com');
 //        $client1->setName('Nom1');
 //        $client1->setFirstname('Prénom1');
-        $client1->setPassword('Not24get');
+        $client1->setPassword('123456');
         $client1->setRoles(['ROLE_ADMIN']);
 //
 
@@ -96,7 +96,7 @@ class AppFixtures extends Fixture
         $client2->setEmail('client@client.com');
 //        $client2->setName('Nom2');
 //        $client2->setFirstname('Prénom2');
-        $client2->setPassword('Not24get');
+        $client2->setPassword('123456');
         $client2->setRoles(['ROLE_USER']);
 //
 

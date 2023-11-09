@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
 {
@@ -41,6 +40,9 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Renouvellement $Renouvellement = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?User $customer = null;
 
     public function __construct()
     {
@@ -164,6 +166,18 @@ class Reservation
     public function setRenouvellement(?Renouvellement $Renouvellement): static
     {
         $this->Renouvellement = $Renouvellement;
+
+        return $this;
+    }
+
+    public function getCustomer(): ?User
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?User $customer): static
+    {
+        $this->customer = $customer;
 
         return $this;
     }

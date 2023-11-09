@@ -18,12 +18,7 @@ class UniteController extends AbstractController
     #[Route('/unite', name: 'app_unite')]
     public function index(EntityManagerInterface $em, BaieRepository $br): Response
     {
-        $unites = $em->getRepository(Unite::class)->findAll();
-        $baies = $em->getRepository(Baie::class)->findAll();
-
         return $this->render('unite/index.html.twig', [
-            'unites' => $unites,
-            'baies' => $baies,
         ]);
     }
 

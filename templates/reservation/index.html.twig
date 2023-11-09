@@ -6,18 +6,123 @@
 
 {% block body %}
 
-    <h1>Réservation</h1>
-    <h1>Réservation</h1>
+    <h2>Réservation</h2>
 
-    {% if is_granted('ROLE_USER') %}
 
-    {% else %}
-{#        <div class="pasconnecte">#}
-{#            <p>Veuillez vous connectez pour avoir accès a vos réservations</p>#}
-{#            <a class="btn btn-primary" href="{{ url('app_login') }}">Connectez-vous</a>#}
-{#            <p>Pas encore de compte ? Vous pouvez un créer un ici</p>#}
-{#            <a class="btn btn-secondary" href="{{ url('app_register') }}">Créer un compte</a>#}
-{#        </div>#}
-    {% endif %}
+    <h3>Abonnement</h3>
 
+    <div class="container">
+        <table class="table table-hover ">
+            <tr>
+                <thead class="thead-dark">
+                <th>ID</th>
+                <th>Numéro</th>
+                <th>Abonnement</th>
+                <th>Quantité</th>
+                <th>Date de début</th>
+                <th>Date de résiliation</th>
+                <th>Renouvellement</th>
+                <th>Renouvellement automatique</th>
+                </thead>
+            </tr>
+            <tbody>
+            {% for res in reservations %}
+                <tr>
+                    <td>{{ res.id }}</td>
+                    <td>{{ res.Numero }}</td>
+                    <td>{{ res.IdentifiantAbonnement.nom }}</td>
+                    <td>{{ res.Quantity }}</td>
+                    <td>{{ res.DateDeb | date('d-m-Y') }}</td>
+                    <td>{{ res.DateEnd | date('d-m-Y') }}</td>
+                    {% if res.Renouvellement.nom == 'An' %}
+                        <td>Renouvellement Annuel</td>
+                    {% else %}
+                        <td>Renouvellement Mensuel</td>
+                    {% endif %}
+                    {% if res.ren_auto == 1 %}
+                        <td>Activé</td>
+                    {% else %}
+                        <td>Désactivé</td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for baie in baies %}
+                <div class="col">
+                    <div class="card text-center mb-3" style="width: 30rem;">
+                        <div class="card-header">
+                            Baie N°{{ baie.id }} / Statut : {% if baie.status != 0 %}
+                                complete {% else %}
+                                libre
+                            {% endif %}
+                            / Nombre d'Unités : {{ baie.NbrEmplacement }}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="crud">
+                                    {#                                <a class="btn btn-success" href="{{ url('app_unite_new') }}"><i class="bi bi-plus"></i></a> #}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            {% for unite in unites %}
+                                <blockquote class="blockquote mb-3">
+                                    <dt>Unité N°{{ unite.numero }}</dt>
+                                    <dt>Status</dt>
+                                    {% if unite.status == 0 %}
+                                        <dd>libre</dd>
+                                    {% else %}
+                                        <dd>complete</dd>
+                                        {#                                    <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_make_reservation') }}">Réserver</a> #}
+                                    {% endif %}
+                                </blockquote>
+                                {#                            <a class="btn btn-danger" href="{{ url('app_unite_remove') }}"><i class="bi bi-dash"></i></a> #}
+                            {% endfor %}
+                            {#                        <a href="{{ url('app_unite_details') }}" class="btn btn-primary" id="detail">Détails</a> #}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {#    <div class="container"> #}
+    {#        <h3>Unités</h3> #}
+    {#        #}
+    {#        <table class="table table-hover "> #}
+    {#            <tr> #}
+    {#                <thead class="thead-dark"> #}
+    {#                <th>ID</th> #}
+    {#                <th>Numéro</th> #}
+    {#                <th>Abonnement</th> #}
+    {#                <th>Quantité</th> #}
+    {#                <th>Date de début</th> #}
+    {#                <th>Date de résiliation</th> #}
+    {#                <th>Renouvellement</th> #}
+    {#                <th>Renouvellement automatique</th> #}
+    {#                </thead> #}
+    {#            </tr> #}
+    {#            <tbody> #}
+    {#            {% for uni in unites %} #}
+    {#            <tr> #}
+    {#                <td>{{ uni.id }}</td> #}
+    {#                <td>{{ uni.Numero }}</td> #}
+    {#                <td>{{ uni.IdentifiantAbonnement.nom }}</td> #}
+    {#                <td>{{ uni.Quantity }}</td> #}
+    {#                <td>{{ uni.DateDeb | date('d-m-Y') }}</td> #}
+    {#                <td>{{ uni.DateEnd | date('d-m-Y') }}</td> #}
+    {#                <td>{{ uni.Renouvellement.nom }}</td> #}
+    {#                {% if uni.Renouvellement.nom == 'An' %} #}
+    {#                    <td>Renouvellement Annuel</td> #}
+    {#                {% else %} #}
+    {#                    <td>Renouvellement Mensuel</td> #}
+    {#                {% endif %} #}
+    {#                {% endfor %} #}
+    {#            </tr> #}
+    {#            </tbody> #}
+    {#        </table> #}
+    {#    </div> #}
 {% endblock %}

@@ -5,17 +5,32 @@
 {% set isSecurityPage = true %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="container mt-5">
+        <div class="col-md-6 offset-md-3">
+{#            <img src="/img/logo.png">#}
+            <h1 class="mb-4">Créer un Compte</h1>
 
-    {{ form_errors(registrationForm) }}
+            {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_start(registrationForm, {'attr': {'class': 'mb-4'}}) }}
+            <div class="mb-3">
+                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'label': 'Email :'}}) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(registrationForm.plainPassword, {
+                    'label': 'Mot de passe :',
+                    'attr': {'class': 'form-control'}
+                }) }}
+            </div>
+            <div class="form-check mb-3">
+                {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                {{ form_label(registrationForm.agreeTerms, "Accepte les Conditions d'utilisation", {'label_attr': {'class': 'form-check-label'}}) }}
+            </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <p>Déjà un Compte ? <a class="btn-link" href="{{ url('app_login') }}">Connectez-vous</a></p>
+
+            <button type="submit" class="btn btn-primary">Créer le compte</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
 {% endblock %}
