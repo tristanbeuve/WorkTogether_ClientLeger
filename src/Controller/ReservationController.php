@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use function Symfony\Component\Clock\now;
 
@@ -52,21 +51,23 @@ class ReservationController extends AbstractController
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $reservation = $form->getData();
-            $date1=new DateTime('now');
-            $date2=new DateTime('now');
-            $dateDeb = $date1;
-            $reservation->setDateDeb($dateDeb);
-            $renouvel=$form['renouvellement']->getData();
-            if ($renouvel->getnom() == 'An'){
+
+            $duration=$form['renouvellement']->getData();
+
+            if ($duration == 'An'){
                 $interval = new \DateInterval('P1Y');
             }
             else{
                 $interval = new \DateInterval('P1M');
             }
-            $dateEnd = $date2->add($interval);
-            $reservation->setDateEnd($dateEnd);
+
+            $reservation->setDataDeb();
+            $reservation->setDateEndForm($interval);
+
             $reservation->setCustomer($user);
             $em->persist($reservation);
             $em->flush();

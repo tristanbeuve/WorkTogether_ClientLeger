@@ -1,6 +1,6 @@
 /*Gestion des pages en Générale*/
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&;600display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;400;500&;600display=swap');
 
 body {
     font-family: 'Raleway', sans-serif;
@@ -48,6 +48,12 @@ body {
 
 }
 
+/*Gestion des Forms*/
+
+.descri{
+    font-weight: 400;
+    font-size: small;
+}
 
 /* Gestion des pages d'Unités*/
 

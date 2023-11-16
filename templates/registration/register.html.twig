@@ -12,12 +12,12 @@
 
             {{ form_errors(registrationForm) }}
 
-            {{ form_start(registrationForm, {'attr': {'class': 'mb-4'}}) }}
+            {{ form_start(registrationForm, {'attr': {'class': 'mb-4','novalidate': 'novalidate'}}) }}
             <div class="mb-3">
                 {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'label': 'Email :'}}) }}
             </div>
             <div class="mb-3">
-                {{ form_row(registrationForm.plainPassword, {
+                {{ form_row(registrationForm.password, {
                     'label': 'Mot de passe :',
                     'attr': {'class': 'form-control'}
                 }) }}
@@ -26,6 +26,7 @@
                 {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
                 {{ form_label(registrationForm.agreeTerms, "Accepte les Conditions d'utilisation", {'label_attr': {'class': 'form-check-label'}}) }}
             </div>
+            <p class="descri">En acceptant ces <a class="btn-link" href="{{ url('app_CU') }}">Conditions d'Utilisation</a>, vous reconnaissez avoir lu, compris et accepté l'ensemble des dispositions énoncées ci-dessus.</p>
 
             <p>Déjà un Compte ? <a class="btn-link" href="{{ url('app_login') }}">Connectez-vous</a></p>
 

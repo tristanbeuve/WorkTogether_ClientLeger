@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use SebastianBergmann\CodeCoverage\Report\Xml\Unit;
+
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
 {
@@ -15,8 +18,6 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $Numero = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateDeb = null;
@@ -44,27 +45,31 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?User $customer = null;
 
+    #[ORM\ManyToOne(inversedBy: 'Unite')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Unite $unite = null;
+
     public function __construct()
     {
         $this->facturations = new ArrayCollection();
         $this->unites = new ArrayCollection();
     }
 
+    /**
+     * @return ArrayCollection
+     */
+//    public function set(): ArrayCollection
+//    {
+//        return $this->facturations;
+//    }
+//    public function setDuration($duration) {
+//
+//        return $this->$dateEnd;
+//    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNumero(): ?int
-    {
-        return $this->Numero;
-    }
-
-    public function setNumero(int $Numero): static
-    {
-        $this->Numero = $Numero;
-
-        return $this;
     }
 
     public function getDateDeb(): ?\DateTimeInterface
@@ -72,9 +77,9 @@ class Reservation
         return $this->dateDeb;
     }
 
-    public function setDateDeb(\DateTimeInterface $dateDeb): static
+    public function setDateDeb(): static
     {
-        $this->dateDeb = $dateDeb;
+        $this->dateDeb = new DateTime('now');
 
         return $this;
     }
@@ -84,8 +89,17 @@ class Reservation
         return $this->dateEnd;
     }
 
-    public function setDateEnd(\DateTimeInterface $dateEnd): static
+    public function setDateEnd(\DateTimeInterface $DateEnd): static
     {
+        $this->dateEnd = $DateEnd;
+
+        return $this;
+    }
+
+    public function setDateEndForm( \DateInterval $duration): static
+    {
+        $date = new DateTime('now');
+        $dateEnd = $date->add($duration);
         $this->dateEnd = $dateEnd;
 
         return $this;
@@ -178,6 +192,18 @@ class Reservation
     public function setCustomer(?User $customer): static
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getUniteId(): ?Unite
+    {
+        return $this->unite;
+    }
+
+    public function setUniteId(?Unite $unite): static
+    {
+        $this->unite = $unite;
 
         return $this;
     }

@@ -110,35 +110,39 @@ class AppFixtures extends Fixture
 
         // Créez des données de test pour la table "reservation"
         $reservation1 = new Reservation();
-        $reservation1->setNumero(001);
         $reservation1->setDateDeb(new \DateTime('2023-10-15'));
         $reservation1->setDateEnd(new \DateTime('2023-10-20'));
         $reservation1->setRenAuto(0);
         $reservation1->setQuantity(5);
-        $reservation1->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['id' => 1]));
+        $reservation1->setCustomer($manager->getRepository(User::class)->findOneBy(['email'=>"client@client.com"]));
+        $reservation1->setUniteId($manager->getRepository(Unite::class)->findOneBy(['status' => 1]));
+        $reservation1->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => 'Mois']));
         $reservation1->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => 199]));
 
         $reservation2 = new Reservation();
-        $reservation2->setNumero(002);
         $reservation2->setDateDeb(new \DateTime('2023-11-01'));
         $reservation2->setDateEnd(new \DateTime('2023-11-10'));
         $reservation2->setRenAuto(1);
         $reservation2->setQuantity(1);
-        $reservation2->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['id' => 2]));
+        $reservation2->setCustomer($manager->getRepository(User::class)->findOneBy(['email'=>"client@client.com"]));
+        $reservation2->setUniteId($manager->getRepository(Unite::class)->findOneBy(['status' => 0]));
+        $reservation2->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => 'Mois']));
         $reservation2->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => 99]));
 
         $reservation3 = new Reservation();
-        $reservation3->setNumero(002);
         $reservation3->setDateDeb(new \DateTime('2023-12-01'));
         $reservation3->setDateEnd(new \DateTime('2023-12-15'));
         $reservation3->setRenAuto(0);
         $reservation3->setQuantity(20);
-        $reservation3->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['id' => 2]));
+        $reservation3->setCustomer($manager->getRepository(User::class)->findOneBy(['email'=>"client@client.com"]));
+        $reservation3->setUniteId($manager->getRepository(Unite::class)->findOneBy(['status' => 0]));
+        $reservation3->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => 'An']));
         $reservation3->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => 49]));
 
         // Persistez les objets dans la base de données
         $manager->persist($reservation1);
         $manager->persist($reservation2);
+        $manager->persist($reservation3);
 
         // Flush pour enregistrer les objets
         $manager->flush();
@@ -163,14 +167,14 @@ class AppFixtures extends Fixture
         $unite1->setStatus(true);
         $unite1->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 5]));
         $unite1->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => 5]));
-        $unite1->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id' => 5]));
+        $unite1->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['status' => 0]));
 
         $unite2 = new Unite();
         $unite2->setNumero(002);
         $unite2->setStatus(false);
         $unite2->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => 6]));
         $unite2->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => 6]));
-        $unite2->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id' => 6]));
+        $unite2->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['status' => 1]));
 
         // Persistez les objets dans la base de données
         $manager->persist($unite1);

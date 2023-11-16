@@ -17,4 +17,14 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    #[Route('/home/Conditions', name: 'app_CU')]
+public function indexCU(): Response
+{
+
+
+    return $this->render('CU.html.twig', [
+        'controller_name' => 'HomeController',
+    ]);
+}
 }

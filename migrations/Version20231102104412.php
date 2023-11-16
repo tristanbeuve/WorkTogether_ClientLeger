@@ -22,7 +22,7 @@ final class Version20231102104412 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE abonnement (id INT IDENTITY NOT NULL, nom NVARCHAR(255) NOT NULL, prix INT NOT NULL, nbr_emplacement INT NOT NULL, reduction INT NOT NULL, img_path NVARCHAR(255), PRIMARY KEY (id))');
         $this->addSql('CREATE TABLE baie (id INT IDENTITY NOT NULL, nbr_emplacement INT NOT NULL, status BIT NOT NULL, PRIMARY KEY (id))');
-        $this->addSql('CREATE TABLE reservation (id INT IDENTITY NOT NULL, identifiant_abonnement_id INT, numero INT NOT NULL, date_deb DATETIME2(6) NOT NULL, date_end DATETIME2(6) NOT NULL, ren_auto BIT NOT NULL, quantity INT NOT NULL, PRIMARY KEY (id))');
+        $this->addSql('CREATE TABLE reservation (id INT IDENTITY NOT NULL, identifiant_abonnement_id INT, date_deb DATETIME2(6) NOT NULL, date_end DATETIME2(6) NOT NULL, ren_auto BIT NOT NULL, quantity INT NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE INDEX IDX_42C8495525ABD6B9 ON reservation (identifiant_abonnement_id)');
         $this->addSql('CREATE TABLE type_unite (id INT IDENTITY NOT NULL, nom NVARCHAR(255) NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE TABLE unite (id INT IDENTITY NOT NULL, identifiant_type_unite_id INT, identifiant_baie_id INT, identifiant_reservation_id INT, numero INT NOT NULL, status BIT NOT NULL, PRIMARY KEY (id))');

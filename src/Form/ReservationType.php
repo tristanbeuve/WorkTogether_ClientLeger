@@ -21,10 +21,9 @@ class ReservationType extends AbstractType
         $builder
             ->add('IdentifiantAbonnement', EntityType::class, [
                 'class' => Abonnement::class,
-                "label" => "Abonnement",
                 'choice_label'=>'nom',
             ])
-            ->add('Numero', null, ['label'=>'Numéro'])
+//            ->add('Numero', null, ['label'=>'Numéro'])
 //            ->add('dateDeb' , DateType::class, [
 //                'label' => 'Date de Début',
 //        'widget' => 'single_text',
@@ -44,7 +43,7 @@ class ReservationType extends AbstractType
                 'label' => 'Type de Renouvellement',
                 ])
             ->add('ren_auto',null, ['label' => 'Renouvellement Automatique'] )
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, ['label' => 'Réserver'])
         ;
     }
 

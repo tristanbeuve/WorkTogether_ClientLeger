@@ -5,9 +5,32 @@
 {% set isSecurityPage = false %}
 
 {% block body %}
-
+    <div class="container mt-5">
+    <div class="col-md-6 offset-md-3">
     <h2>Nouvelle Réservation</h2>
+    {{ form_errors(form) }}
+    {{ form_start(form, {'attr': {'class': 'mb-4','novalidate': 'novalidate'}}) }}
 
-    {{ form(form) }}
+    <div class="mb-3">
+        {{ form_row(form.IdentifiantAbonnement, {'attr': {'class': 'form-control', 'label': 'Abonnement :'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.quantity, {'attr': {'class': 'form-control', 'label': 'Quantité :'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.renouvellement, {'attr': {'class': 'form-control', 'label': 'Quantité :'}}) }}
+    </div>
+
+    <div class="form-check mb-3">
+        {{ form_row(form.ren_auto, {'attr': {'class': 'form-check-input'}}) }}
+        {{ form_label(form.ren_auto, "Renouvellement Automatique", {'label_attr': {'class': 'form-check-label'}}) }}
+    </div>
+    <p class="descri">Cela permettera de renouveller votre abonnement automatiquement</p>
+
+
+{#    <button type="submit" class="btn btn-primary">Créer le compte</button>#}
+    {{ form_end(form) }}
+
+{#    {{ form(form) }}#}
 
 {% endblock %}

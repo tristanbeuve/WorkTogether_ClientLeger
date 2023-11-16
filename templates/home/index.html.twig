@@ -5,6 +5,13 @@
 {% set isSecurityPage = false %}
 
 {% block body %}
+
+    {% for message in app.flashes('success')%}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+
     <div class="content">
         <div class="homepage">
             <img src="img/logo.png" alt="logo">
