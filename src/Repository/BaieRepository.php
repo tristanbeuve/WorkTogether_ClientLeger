@@ -21,19 +21,20 @@ class BaieRepository extends ServiceEntityRepository
         parent::__construct($registry, Baie::class);
     }
 
-//    /**
-//     * @return Baie[] Returns an array of Baie objects
-//     */
-//    public function findByDispo($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.status = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return int Returns an array of Baie objects
+     */
+    public function CountBaie($value): int
+    {
+        return $this->createQueryBuilder('b')
+            ->select('COUNT(b)')
+            ->andWhere('b.status = :val')
+            ->setParameter('val', $value)
+//            ->groupBy('b.status')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Baie
 //    {

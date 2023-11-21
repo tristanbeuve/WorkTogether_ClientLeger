@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Unite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @extends ServiceEntityRepository<Unite>
@@ -36,21 +37,25 @@ class UniteRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-public function CountUnite($value): ?int{
+    /**
+     * @return int Returns an array of Baie objects
+     */
+    public function CountUnite($value): int
+    {
 //    SELECT COUNT(u.id)
 //FROM YourBundle\Entity\Unite u
 //WHERE u.status = 0
 //GROUP BY u.status;
 
-    return $this->createQueryBuilder('u')
-        ->andWhere('u.status = :val')
-        ->setParameter('val', $value)
-        ->groupBy('u.status')
-        ->getQuery()
-        ->getOneOrNullResult()
-        ;
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->andWhere('u.status = :val')
+            ->setParameter('val', $value)
+//            ->groupBy('u.status')
+            ->getQuery()
+            ->getSingleScalarResult();
 
-}
+    }
 
 
 //    public function findOneBySomeField($value): ?Unite

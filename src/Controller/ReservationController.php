@@ -58,13 +58,6 @@ class ReservationController extends AbstractController
         $form = $this->createForm(ReservationType::class, $dataReservation);
         $form->handleRequest($request);
 
-        if ($dataReservation->renouvellement->getNom() == "Mois"){
-            $duration = new \DateInterval("P1M");
-        }
-        if ($dataReservation->renouvellement->getNom() == 'An'){
-            $duration = new \DateInterval("P1Y");
-        }
-
 
 //        $abo = $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement();
 //        if ($dataReservation->quantity * $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement()<= $urr->CountUnite(0)) {
@@ -77,8 +70,14 @@ class ReservationController extends AbstractController
             $reservation->setQuantity($dataReservation->quantity);
             $reservation->setRenAuto($dataReservation->ren_auto);
             $reservation->setRenouvellement($dataReservation->renouvellement);
-            $reservation->setDateDeb();
+            if ($dataReservation->renouvellement->getNom() == "Mois"){
+                $duration = new \DateInterval("P1M");
+            }
+            if ($dataReservation->renouvellement->getNom() == 'An'){
+                $duration = new \DateInterval("P1Y");
+            }
             $reservation->setDateEndForm($duration);
+            $reservation->setDateDeb();
 
             $reservation->setCustomer($user);
             $em->persist($reservation);

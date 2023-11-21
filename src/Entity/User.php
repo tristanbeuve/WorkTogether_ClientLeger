@@ -34,11 +34,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-//    #[ORM\Column]
-//    private ?string $name = null;
-//
-//    #[ORM\Column]
-//    private ?string $firstname = null;
 
     /**
      * @var string The hashed password
@@ -49,28 +44,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Reservation::class)]
     private Collection $reservations;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
     }
 
-//    public function getName(): ?string{
-//        return $this->name;
-//    }
-//
-//    public function setName(string $name): static{
-//        $this->name = $name;
-//        return $this;
-//}
-//
-//    public function getFirstname(): ?string{
-//        return $this->firstname;
-//    }
-//
-//    public function setFirstname(string $firstname): static{
-//        $this->firstname = $firstname;
-//        return $this;
-//}
     public function getId(): ?int
     {
         return $this->id;
@@ -167,6 +151,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $reservation->setCustomer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }

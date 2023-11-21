@@ -9,8 +9,8 @@
     <div class="intro">
         <h2>Unités</h2>
 
-        <h3>Il y a XX Baies et XX Unités de libres !</h3>
-        <h4>Profitez-en !</h4>
+        <h3>Il reste {{ baiesLibre }} Baies et {{ unitesLibre }} Unités de libres </h3>
+        <h3>Alors profitez-en !</h3>
 
         <h5>Baies de Stockage : Votre Solution de Stockage de Données</h5>
         <p class="intro">Les baies de stockage sont des dispositifs de stockage de données essentiels pour les
@@ -46,12 +46,14 @@
             <div class="col-md-6 p-4 ps-md-0">
                 <p class="Quest">Qui peut en bénéficier ?</p>
                 <ul>
-                    <li>Entreprises de toutes tailles : Des petites entreprises aux grandes corporations, nos baies s'adaptent à
+                    <li>Entreprises de toutes tailles : Des petites entreprises aux grandes corporations, nos baies
+                        s'adaptent à
                         vos
                         besoins.
                     </li>
                     <li>
-                        Professionnels de l'informatique : Les experts en informatique peuvent bénéficier de la flexibilité et
+                        Professionnels de l'informatique : Les experts en informatique peuvent bénéficier de la
+                        flexibilité et
                         de la
                         fiabilité de nos baies.
                     </li>
@@ -62,11 +64,13 @@
                         Hébergement de sites web : Assurez la disponibilité constante de vos sites web.
                     </li>
                     <li>
-                        Applications gourmandes en données : Idéales pour les applications qui nécessitent beaucoup d'espace de
+                        Applications gourmandes en données : Idéales pour les applications qui nécessitent beaucoup
+                        d'espace de
                         stockage.
                     </li>
                     <li>
-                        Contactez-nous dès aujourd'hui pour en savoir plus sur la façon dont nos baies de stockage peuvent
+                        Contactez-nous dès aujourd'hui pour en savoir plus sur la façon dont nos baies de stockage
+                        peuvent
                         améliorer
                         votre entreprise.
                     </li>
@@ -77,10 +81,10 @@
 
     <a class="btn btn-outline-primary" href="{{ url('app_reservation') }}">Accédez a vos Unités</a>
 
-{#    {% if is_granted('ROLE_ADMIN') %}#}
-{#        <div class="crud">#}
-{#            #}{#            <a class="btn btn-success" href="{{ url('app_baie_new') }}">Ajouter</a> #}
-{#            #}{#            <a class="btn btn-danger" href="{{ url('app_baie_remove') }}">Archiver</a> #}
-{#        </div>#}
-{#    {% endif %}#}
+    {#    {% if is_granted('ROLE_ADMIN') %} #}
+    {#        <div class="crud"> #}
+    {#            #}{#            <a class="btn btn-success" href="{{ url('app_baie_new') }}">Ajouter</a> #}
+    {#            #}{#            <a class="btn btn-danger" href="{{ url('app_baie_remove') }}">Archiver</a> #}
+    {#        </div> #}
+    {#    {% endif %} #}
 {% endblock %}

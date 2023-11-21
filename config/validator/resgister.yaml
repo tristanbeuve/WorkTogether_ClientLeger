@@ -24,3 +24,9 @@ App\Dto\RegisterDto:
       - EqualTo:
           propertyPath: password
           message: "La confirmation ne correspond pas à votre mot de passe"
+    nom:
+      - NotBlank:
+          message: "Veuillez remplir ce champs."
+    prenom:
+      - NotBlank:
+          message: "Veuillez remplir ce champs."

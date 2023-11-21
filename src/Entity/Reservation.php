@@ -89,12 +89,12 @@ class Reservation
         return $this->dateEnd;
     }
 
-//    public function setDateEnd(\DateTimeInterface $DateEnd): static
-//    {
-//        $this->dateEnd = $DateEnd;
-//
-//        return $this;
-//    }
+    public function setDateEnd(\DateTimeInterface $DateEnd): static
+    {
+        $this->dateEnd = $DateEnd;
+
+        return $this;
+    }
 
     public function setDateEndForm( \DateInterval $duration): static
     {

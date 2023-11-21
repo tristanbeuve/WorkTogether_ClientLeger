@@ -84,6 +84,8 @@ class AppFixtures extends Fixture
         // Créez des données de test pour la table "client"
         $client1 = new User();
 //        $client1->setUsername('admin');
+        $client1->setNom("Nom1");
+        $client1->setPrenom("Prenom1");
         $client1->setEmail('admin@admin.com');
 //        $client1->setName('Nom1');
 //        $client1->setFirstname('Prénom1');
@@ -94,6 +96,8 @@ class AppFixtures extends Fixture
         $client2 = new User();
 //        $client2->setUsername('client');
         $client2->setEmail('client@client.com');
+        $client2->setNom("Nom2");
+        $client2->setPrenom("Prenom2");
 //        $client2->setName('Nom2');
 //        $client2->setFirstname('Prénom2');
         $client2->setPassword('123456');
