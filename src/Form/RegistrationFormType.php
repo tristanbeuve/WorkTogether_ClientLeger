@@ -29,6 +29,9 @@ class RegistrationFormType extends AbstractType
                 "label" => "Mot de passe",
                 'attr' => ['autocomplete' => 'new-password'],
             ])
+            ->add('passwordConfirmation', PasswordType::class, [
+                "label"=>'Confirmation du mot de passe',
+            ])
         ;
     }
 

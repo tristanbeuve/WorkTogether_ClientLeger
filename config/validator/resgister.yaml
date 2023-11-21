@@ -18,3 +18,9 @@ App\Dto\RegisterDto:
     agreeTerms:
       - IsTrue:
           message: "Vous devez accepter les Conditions d'utilisation"
+    passwordConfirmation:
+      - NotBlank:
+          message: "Veuillez remplir ce champs."
+      - EqualTo:
+          propertyPath: password
+          message: "La confirmation ne correspond pas à votre mot de passe"

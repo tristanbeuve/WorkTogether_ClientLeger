@@ -21,19 +21,19 @@
         <table class="table table-hover ">
             <tr>
                 <thead class="thead-dark">
-                <th>ID</th>
+{#                <th>ID</th>#}
                 <th>Abonnement</th>
                 <th>Quantité</th>
                 <th>Date de début</th>
                 <th>Date de résiliation</th>
                 <th>Renouvellement</th>
-{#                <th>Renouvellement automatique</th>#}
+                <th>Renouvellement automatique</th>
                 </thead>
             </tr>
             <tbody>
             {% for res in reservations %}
                 <tr>
-                    <td>{{ res.id }}</td>
+{#                    <td>{{ res.id }}</td>#}
                     <td>{{ res.IdentifiantAbonnement.nom }}</td>
                     <td>{{ res.Quantity }}</td>
                     <td>{{ res.DateDeb | date('d-m-Y') }}</td>

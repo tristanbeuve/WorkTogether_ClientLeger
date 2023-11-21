@@ -32,6 +32,9 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $dataUser);
         $form->handleRequest($request);
 
+//        if ($dataUser->password != $dataUser->passwordConfirmation){
+//            $form->addError("La confirmation ne correspond pas à votre mot de passe");
+//        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = new User();

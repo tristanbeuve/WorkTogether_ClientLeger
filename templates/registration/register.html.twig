@@ -22,6 +22,12 @@
                     'attr': {'class': 'form-control'}
                 }) }}
             </div>
+            <div class="mb-3">
+                {{ form_row(registrationForm.passwordConfirmation, {
+                    'label': 'Confirmation du mot de passe :',
+                    'attr': {'class': 'form-control'}
+                }) }}
+            </div>
             <div class="form-check mb-3">
                 {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
                 {{ form_label(registrationForm.agreeTerms, "Accepte les Conditions d'utilisation", {'label_attr': {'class': 'form-check-label'}}) }}
