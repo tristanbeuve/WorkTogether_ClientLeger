@@ -55,19 +55,6 @@ body {
     font-size: small;
 }
 
-/* Gestion des pages d'Unités*/
-
-
-/* Gestions des images*/
-
-/*.background-image {*/
-/*    position: fixed;*/
-/*    width: 100%;*/
-/*    background-size: cover;*/
-/*    background-position: center;*/
-/*    height: 100vh;*/
-/*}*/
-
-/*#bg_home{*/
-/*    !*background-image: url('../../public/img/');*!*/
-/*}*/
+#boutonReserver{
+    margin-bottom: 2em;
+}

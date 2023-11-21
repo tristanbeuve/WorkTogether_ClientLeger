@@ -20,8 +20,12 @@
     {% if is_granted('ROLE_ADMIN') %}
         {#        <a class="btn btn-success" href="{{ url('app_abonnement_new') }}">Ajouter</a> #}
     {% endif %}
+
+    <div class="container d-flex justify-content-end">
+        <a class="btn btn-primary " id="boutonReserver" href="{{ url('app_new_reservation') }}">Choisir un abonnemment</a>
+    </div>
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row d-flex justify-content-around">
             {% for abo in abonnements %}
                 <div class="col">
                     <div class="card text-center mb-3" style="width: 20rem;">
@@ -57,7 +61,6 @@
                             <small class="text-body-secondary">Utilisé par XX Utilisateur(s)</small>
                         </div>
                     </div>
-                    <a class="btn btn-outline-primary" id="reserver" href="{{ url('app_new_reservation') }}">Choisir cet abonnemment</a>
                 </div>
             {% endfor %}
         </div>
