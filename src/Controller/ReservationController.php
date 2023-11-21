@@ -2,13 +2,19 @@
 
 namespace App\Controller;
 
+use App\Dto\RegisterDto;
+use App\Dto\ReservationDto;
+use App\Entity\Abonnement;
 use App\Entity\Baie;
 use App\Entity\Renouvellement;
 use App\Entity\Reservation;
 use App\Entity\Unite;
 use App\Entity\User;
+use App\Form\RegistrationFormType;
 use App\Form\ReservationType;
+use App\Repository\AbonnementRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\UniteRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -29,57 +35,64 @@ class ReservationController extends AbstractController
         $unites = $em->getRepository(Unite::class)->findAll();
         $baies = $em->getRepository(Baie::class)->findAll();
 
-        $id= $this->getUser()->getId();
-        $user = $ur->findOneBy(['id'=>$id]);
+        $id = $this->getUser()->getId();
+        $user = $ur->findOneBy(['id' => $id]);
         $reservations = $rr->findByUser($id);
 
         return $this->render('reservation/index.html.twig', [
-            'baies'=>$baies,
-            'unites'=>$unites,
-            'id'=>$id,
-            'reservations'=>$reservations,
+            'baies' => $baies,
+            'unites' => $unites,
+            'id' => $id,
+            'reservations' => $reservations,
         ]);
     }
 
     #[Route('/reserver', name: 'app_new_reservation')]
     #[IsGranted('ROLE_USER')]
-    public function new(UserRepository $ur, Request $request, EntityManagerInterface $em): Response
+    public function new(UserRepository $ur, AbonnementRepository $ar, UniteRepository $urr, Request $request, ReservationDto $dto, EntityManagerInterface $em): Response
     {
-        $id= $this->getUser()->getId();
-        $user = $ur->findOneBy(['id'=>$id]);
+        $id = $this->getUser()->getId();
+        $user = $ur->findOneBy(['id' => $id]);
 
-        $reservation = new Reservation();
-        $form = $this->createForm(ReservationType::class, $reservation);
+        $dataReservation = new ReservationDto();
+        $form = $this->createForm(ReservationType::class, $dataReservation);
         $form->handleRequest($request);
 
+        if ($dataReservation->renouvellement->getNom() == "Mois"){
+            $duration = new \DateInterval("P1M");
+        }
+        if ($dataReservation->renouvellement->getNom() == 'An'){
+            $duration = new \DateInterval("P1Y");
+        }
+
+
+//        $abo = $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement();
+//        if ($dataReservation->quantity * $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement()<= $urr->CountUnite(0)) {
+//            $form->addError("Il n'y a pas assez d'unités disponible. Veuillez réessayer plus tard");
+//        }
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $reservation = $form->getData();
-
-            $duration=$form['renouvellement']->getData();
-
-            if ($duration == 'An'){
-                $interval = new \DateInterval('P1Y');
-            }
-            else{
-                $interval = new \DateInterval('P1M');
-            }
-
-            $reservation->setDataDeb();
-            $reservation->setDateEndForm($interval);
+            $reservation= new Reservation();
+            $reservation->setIdentifiantAbonnement($dataReservation->IdentifiantAbonnement);
+            $reservation->setQuantity($dataReservation->quantity);
+            $reservation->setRenAuto($dataReservation->ren_auto);
+            $reservation->setRenouvellement($dataReservation->renouvellement);
+            $reservation->setDateDeb();
+            $reservation->setDateEndForm($duration);
 
             $reservation->setCustomer($user);
             $em->persist($reservation);
             $em->flush();
+
             $this->addFlash(
-                'success',
+                'reservationSuccess',
                 "Abonnement correctement réservé"
             );
             return $this->redirectToRoute('app_reservation', [
-                ]);
+            ]);
         }
         return $this->render('reservation/new.html.twig', [
-            'form' => $form
+            'form' => $form->createView(),
         ]);
     }
 }

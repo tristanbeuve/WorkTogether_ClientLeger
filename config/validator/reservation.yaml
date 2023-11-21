@@ -1,0 +1,11 @@
+App\Dto\ReservationDto:
+  properties:
+    quantity:
+      - NotBlank:
+          message: "Veuillez remplir ce champs."
+      - Type:
+          type: integer
+          message: "La valeur {{ value }} n'est pas un chiffre."
+#          min: 1
+#          max: maxUniteAbo
+#          maxMessage: "Il n'y a pas assez d'unité disponible"

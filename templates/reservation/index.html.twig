@@ -6,6 +6,12 @@
 
 {% block body %}
 
+    {% for message in app.flashes('reservationSuccess')%}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h2>Réservation</h2>
 
 

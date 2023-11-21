@@ -36,6 +36,23 @@ class UniteRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+public function CountUnite($value): ?int{
+//    SELECT COUNT(u.id)
+//FROM YourBundle\Entity\Unite u
+//WHERE u.status = 0
+//GROUP BY u.status;
+
+    return $this->createQueryBuilder('u')
+        ->andWhere('u.status = :val')
+        ->setParameter('val', $value)
+        ->groupBy('u.status')
+        ->getQuery()
+        ->getOneOrNullResult()
+        ;
+
+}
+
+
 //    public function findOneBySomeField($value): ?Unite
 //    {
 //        return $this->createQueryBuilder('u')

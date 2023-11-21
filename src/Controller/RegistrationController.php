@@ -26,7 +26,7 @@ class RegistrationController extends AbstractController
 //    }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, RegisterDto $dto ,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $dataUser = new RegisterDto();
         $form = $this->createForm(RegistrationFormType::class, $dataUser);
@@ -45,13 +45,15 @@ class RegistrationController extends AbstractController
                     $dataUser->password
                 )
             );
-
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
+            $this->addFlash(
+                'compteSuccess',
+                "Votre compte a bien été créé"
+            );
             return $this->redirectToRoute('home', [
-
             ]);
         }
 

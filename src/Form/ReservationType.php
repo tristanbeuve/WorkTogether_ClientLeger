@@ -2,13 +2,16 @@
 
 namespace App\Form;
 
+use App\Dto\ReservationDto;
 use App\Entity\Abonnement;
 use App\Entity\Renouvellement;
 use App\Entity\Reservation;
+use Doctrine\DBAL\Types\BooleanType;
 use phpDocumentor\Reflection\Types\Boolean;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +45,7 @@ class ReservationType extends AbstractType
                 'choice_label' => 'nom',
                 'label' => 'Type de Renouvellement',
                 ])
-            ->add('ren_auto',null, ['label' => 'Renouvellement Automatique'] )
+            ->add('ren_auto',CheckboxType::class, ['label'=>'Renouvellement Automatique'])
             ->add('submit', SubmitType::class, ['label' => 'Réserver'])
         ;
     }
@@ -50,7 +53,7 @@ class ReservationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Reservation::class,
+            'data_class' => ReservationDto::class,
         ]);
     }
 }
