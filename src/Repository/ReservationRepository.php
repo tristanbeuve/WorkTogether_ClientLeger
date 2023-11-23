@@ -35,6 +35,28 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
 
+    public function countAbonnementUser(int $value): array
+    {
+//    SELECT COUNT(c.id)
+//FROM AppBundle\Entity\Client c
+//INNER JOIN AppBundle\Entity\Reservation r
+//    WITH c.id = r.customer
+//INNER JOIN AppBundle\Entity\Abonnement a
+//    WITH r.identifiantAbonnement = a.id
+//WHERE a.status = 0
+//GROUP BY a.status;
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.customer','c')
+            ->innerJoin('r.IdentifiantAbonnement','a')
+            ->select('a.id, COUNT(a),')
+            ->andWhere('a.id = :val')
+            ->setParameter('val' , $value)
+            ->getQuery()
+            ->getResult()
+            ;
+
+    }
+
 //    public function findOneBySomeField($value): ?Reservation
 //    {
 //        return $this->createQueryBuilder('r')

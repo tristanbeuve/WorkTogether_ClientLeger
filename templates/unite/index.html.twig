@@ -19,7 +19,9 @@
             Voici
             quelques détails clés sur nos baies de stockage :
         </p>
-
+        <div class="container d-flex justify-content-end">
+            <a class="btn btn-primary" href="{{ url('app_reservation') }}">Accédez a vos Unités</a>
+        </div>
         <div class="row g-0 position-relative">
             <div class="col-md-6 mb-md-0 p-md-4">
                 <p class="Quest">À quoi ça sert ?</p>
@@ -79,7 +81,6 @@
         </div>
     </div>
 
-    <a class="btn btn-outline-primary" href="{{ url('app_reservation') }}">Accédez a vos Unités</a>
 
     {#    {% if is_granted('ROLE_ADMIN') %} #}
     {#        <div class="crud"> #}

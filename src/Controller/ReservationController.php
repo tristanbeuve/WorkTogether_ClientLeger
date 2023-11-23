@@ -77,6 +77,7 @@ class ReservationController extends AbstractController
                 $duration = new \DateInterval("P1Y");
             }
             $reservation->setDateEndForm($duration);
+            $reservation->setDateDeb();
 
             $reservation->setCustomer($user);
             $em->persist($reservation);

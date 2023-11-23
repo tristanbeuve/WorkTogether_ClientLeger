@@ -22,7 +22,8 @@
     {% endif %}
 
     <div class="container d-flex justify-content-end">
-        <a class="btn btn-primary " id="boutonReserver" href="{{ url('app_new_reservation') }}">Choisir un abonnemment</a>
+        <a class="btn btn-primary " id="boutonReserver" href="{{ url('app_new_reservation') }}">Choisir un
+            abonnemment</a>
     </div>
     <div class="container">
         <div class="row d-flex justify-content-around">
@@ -57,9 +58,10 @@
                                 {#                            <a class="btn btn-danger" href="{{ url('app_abonnement_remove') }}">Archiver</a> #}
                             {% endif %}
                         </div>
-                        <div class="card-footer">
-                            <small class="text-body-secondary">Utilisé par XX Utilisateur(s)</small>
-                        </div>
+{#                        <div class="card-footer">#}
+{#                            <small class="text-body-secondary">Utilisé#}
+{#                                par {{ countReservation }} Utilisateur(s)</small>#}
+{#                        </div>#}
                     </div>
                 </div>
             {% endfor %}
