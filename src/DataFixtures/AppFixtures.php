@@ -77,7 +77,7 @@ class AppFixtures extends Fixture
         $manager->flush();
 
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i= 1; $i<= 20; $i++) {
             $baie = new Baie();
             $baie->setNbrEmplacement(42); // Valeurs aléatoires pour le nombre d'emplacements
             $baie->setStatus($faker->boolean); // Statut aléatoire true ou false
@@ -87,68 +87,91 @@ class AppFixtures extends Fixture
         }
 
 
-        // Créez des données de test pour la table "client" et sa reservation de son abonnement associées
-        for ($i =1; $i<=15; $i++) {
+
+
+        //Créer des utilisateurs qui n'ont pas de reservation
+        for ($h = 1; $h <= 5; $h++) {
             $client = new User();
             $client->setNom($faker->lastName);
             $client->setPrenom($faker->firstName);
             $client->setEmail($faker->email);
-            $client->setPassword($this->hasher->hashPassword($client,'123456789'));
+            $client->setPassword($this->hasher->hashPassword($client, '123456789'));
+            $manager->persist($client);
+        }
+        $manager->flush();
+
+        // Créez des utilisateurs qui ont réserver 1 abonnement
+        for ($i = 1; $i <= 10; $i++) {
+            $client = new User();
+            $client->setNom($faker->lastName);
+            $client->setPrenom($faker->firstName);
+            $client->setEmail($faker->email);
+            $client->setPassword($this->hasher->hashPassword($client, '123456789'));
             $manager->persist($client);
 
             $manager->flush();
 
             $reservation = new Reservation();
             $reservation->setDateDeb();
-            $var=$faker->boolean();
-            if($var == 1){
+            $var = $faker->boolean();
+            if ($var == 1) {
                 $duration = new \DateInterval('P1M');
-            }
-            else{
+            } else {
                 $duration = new \DateInterval('P1Y');
             }
             $reservation->setDateEndForm($duration);
-            $randomField = $faker->randomElement(['Mois','An']);
+            $randomField = $faker->randomElement(['Mois', 'An']);
             $reservation->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => $randomField]));
             $reservation->setRenAuto($faker->boolean);
-            $reservation->setQuantity($faker->numberBetween(0, 20));
-            $user = $manager->getRepository(User::class)->findOneBy(['id' => $i]);
+            $reservation->setQuantity(1);
+            $user = $manager->getRepository(User::class)->findOneBy(['id' => $h+$i-1]);
             $reservation->setCustomer($user);
-            $randomField = $faker->randomElement([49, 99,199]);
+            $randomField = $faker->randomElement([49, 99, 199]);
             $reservation->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => $randomField]));
-            $reservation->setNumero(strtoupper(substr($client->getNom(),0,3)).'ABO'.count($client->getReservations())+1);
+            $reservation->setNumero(strtoupper(substr($client->getNom(), 0, 3)) . 'ABO' . count($client->getReservations()) + 1);
 
             $manager->persist($reservation);
 
+        }
+        $manager->flush();
+
+        //Créer des utilisateurs qui ont plusieurs abonnements
+        for ($j =1; $j<=5; $j++) {
+            $client = new User();
+            $client->setNom($faker->lastName);
+            $client->setPrenom($faker->firstName);
+            $client->setEmail($faker->email);
+            $client->setPassword($this->hasher->hashPassword($client,'123456789'));
+            $manager->persist($client);
             $manager->flush();
+
+            for ($k =0; $k<=1; $k++){
+                $reservation = new Reservation();
+                $reservation->setDateDeb();
+                $var=$faker->boolean();
+                if($var == 1){
+                    $duration = new \DateInterval('P1M');
+                }
+                else{
+                    $duration = new \DateInterval('P1Y');
+                }
+                $reservation->setDateEndForm($duration);
+                $randomField = $faker->randomElement(['Mois','An']);
+                $reservation->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => $randomField]));
+                $reservation->setRenAuto($faker->boolean);
+                $reservation->setQuantity(1);
+                $user = $manager->getRepository(User::class)->findOneBy(['id' => $h+$i+$j-2]);
+                $reservation->setCustomer($user);
+                $randomField = $faker->randomElement([49, 99,199]);
+                $reservation->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => $randomField]));
+                $reservation->setNumero(strtoupper(substr($client->getNom(),0,3)).'ABO'.count($client->getReservations())+$k+1);
+
+                $manager->persist($reservation);
+                $manager->flush();
+            }
+
         }
 
-
-        // Créez des données de test pour la table "reservation" pour les Abonnement
-//        for ($i = 1; $i <= 25; $i++) {
-//            $reservation = new Reservation();
-//            $reservation->setDateDeb();
-//            $var=$faker->boolean();
-//            if($var == 1){
-//                $duration = new \DateInterval('P1M');
-//            }
-//            else{
-//                $duration = new \DateInterval('P1Y');
-//            }
-//            $reservation->setDateEndForm($duration);
-//            $randomField = $faker->randomElement(['Mois','An']);
-//            $reservation->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => $randomField]));
-//            $reservation->setRenAuto($faker->boolean);
-//            $reservation->setQuantity($faker->numberBetween(0, 20));
-//            $reservation->setCustomer($manager->getRepository(User::class)->findOneBy(['email' => $faker->email]));
-//            $randomField = $faker->randomElement([49, 99,199]);
-//            $reservation->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => $randomField]));
-//            $user = $manager->getRepository(User::class)->findOneBy(['id' => $i]);
-//            $reservation->setNumero(strtoupper(substr($user->getNom(),0,3)).'ABO'.count($user->getReservations())+1);
-//
-//            $manager->persist($reservation);
-//            $manager->flush();
-//        }
 
 
         // Créez des données de test pour la table "typeunite"
@@ -166,8 +189,8 @@ class AppFixtures extends Fixture
             $unite = new Unite();
             $unite->setNumero($i);
             $unite->setStatus($faker->boolean);
-            $unite->setIdentifiantReservation(null);
-            $unite->setIdentifiantTypeUnite(null);
+            $unite->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => $faker->numberBetween(1, 15)]));
+            $unite->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => $faker->numberBetween(1, 5)]));
             $unite->setIdentifiantBaie(null);
 
             $manager->persist($unite);
