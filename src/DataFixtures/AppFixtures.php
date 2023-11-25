@@ -77,18 +77,6 @@ class AppFixtures extends Fixture
         $manager->flush();
 
 
-        for ($i= 1; $i<= 20; $i++) {
-            $baie = new Baie();
-            $baie->setNbrEmplacement(42); // Valeurs aléatoires pour le nombre d'emplacements
-            $baie->setStatus($faker->boolean); // Statut aléatoire true ou false
-
-            $manager->persist($baie);
-            $manager->flush();
-        }
-
-
-
-
         //Créer des utilisateurs qui n'ont pas de reservation
         for ($h = 1; $h <= 5; $h++) {
             $client = new User();
@@ -99,6 +87,8 @@ class AppFixtures extends Fixture
             $manager->persist($client);
         }
         $manager->flush();
+
+        $reservationCount = 0;
 
         // Créez des utilisateurs qui ont réserver 1 abonnement
         for ($i = 1; $i <= 10; $i++) {
@@ -124,54 +114,53 @@ class AppFixtures extends Fixture
             $reservation->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => $randomField]));
             $reservation->setRenAuto($faker->boolean);
             $reservation->setQuantity(1);
-            $user = $manager->getRepository(User::class)->findOneBy(['id' => $h+$i-1]);
+            $user = $manager->getRepository(User::class)->findOneBy(['id' => $h + $i - 1]);
             $reservation->setCustomer($user);
             $randomField = $faker->randomElement([49, 99, 199]);
             $reservation->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => $randomField]));
             $reservation->setNumero(strtoupper(substr($client->getNom(), 0, 3)) . 'ABO' . count($client->getReservations()) + 1);
 
             $manager->persist($reservation);
-
+            $reservationCount++;
         }
         $manager->flush();
 
         //Créer des utilisateurs qui ont plusieurs abonnements
-        for ($j =1; $j<=5; $j++) {
+        for ($j = 1; $j <= 5; $j++) {
             $client = new User();
             $client->setNom($faker->lastName);
             $client->setPrenom($faker->firstName);
             $client->setEmail($faker->email);
-            $client->setPassword($this->hasher->hashPassword($client,'123456789'));
+            $client->setPassword($this->hasher->hashPassword($client, '123456789'));
             $manager->persist($client);
             $manager->flush();
 
-            for ($k =0; $k<=1; $k++){
+            for ($k = 0; $k <= 1; $k++) {
                 $reservation = new Reservation();
                 $reservation->setDateDeb();
-                $var=$faker->boolean();
-                if($var == 1){
+                $var = $faker->boolean();
+                if ($var == 1) {
                     $duration = new \DateInterval('P1M');
-                }
-                else{
+                } else {
                     $duration = new \DateInterval('P1Y');
                 }
                 $reservation->setDateEndForm($duration);
-                $randomField = $faker->randomElement(['Mois','An']);
+                $randomField = $faker->randomElement(['Mois', 'An']);
                 $reservation->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => $randomField]));
                 $reservation->setRenAuto($faker->boolean);
                 $reservation->setQuantity(1);
-                $user = $manager->getRepository(User::class)->findOneBy(['id' => $h+$i+$j-2]);
+                $user = $manager->getRepository(User::class)->findOneBy(['id' => $h + $i + $j - 2]);
                 $reservation->setCustomer($user);
-                $randomField = $faker->randomElement([49, 99,199]);
+                $randomField = $faker->randomElement([49, 99, 199]);
                 $reservation->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => $randomField]));
-                $reservation->setNumero(strtoupper(substr($client->getNom(),0,3)).'ABO'.count($client->getReservations())+$k+1);
+                $reservation->setNumero(strtoupper(substr($client->getNom(), 0, 3)) . 'ABO' . count($client->getReservations()) + $k + 1);
 
                 $manager->persist($reservation);
+                $reservationCount++;
                 $manager->flush();
             }
 
         }
-
 
 
         // Créez des données de test pour la table "typeunite"
@@ -183,20 +172,28 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
 
+        for ($j = 1; $j <= 3; $j++) {
+            $baie = new Baie();
+            $baie->setNbrEmplacement(42); // Valeurs aléatoires pour le nombre d'emplacements
+            $baie->setStatus($faker->boolean); // Statut aléatoire true ou false
 
-        // Créez des données de test pour la table "unite"
-        for ($i = 1; $i <= 126; $i++) {
-            $unite = new Unite();
-            $unite->setNumero($i);
-            $unite->setStatus($faker->boolean);
-            $unite->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => $faker->numberBetween(1, 15)]));
-            $unite->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => $faker->numberBetween(1, 5)]));
-            $unite->setIdentifiantBaie(null);
-
-            $manager->persist($unite);
+            $manager->persist($baie);
             $manager->flush();
+
+            // Créez des données de test pour la table "unite"
+            for ($k = 1; $k <= 42; $k++) {
+                $unite = new Unite();
+                $unite->setNumero($j . "-" . $k);
+                $unite->setStatus($faker->boolean);
+                $unite->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => $faker->numberBetween(1, $reservationCount)]));
+                $unite->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => $faker->numberBetween(1, $i - 1)]));
+                $unite->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id'=>$j]));
+
+                $manager->persist($unite);
+                $manager->flush();
+            }
+
+
         }
-
-
     }
 }

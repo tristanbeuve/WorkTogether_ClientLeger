@@ -25,7 +25,7 @@ final class Version20231102104412 extends AbstractMigration
         $this->addSql('CREATE TABLE reservation (id INT IDENTITY NOT NULL, identifiant_abonnement_id INT, date_deb DATETIME2(6) NOT NULL, date_end DATETIME2(6) NOT NULL, ren_auto BIT NOT NULL, quantity INT NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE INDEX IDX_42C8495525ABD6B9 ON reservation (identifiant_abonnement_id)');
         $this->addSql('CREATE TABLE type_unite (id INT IDENTITY NOT NULL, nom NVARCHAR(255) NOT NULL, PRIMARY KEY (id))');
-        $this->addSql('CREATE TABLE unite (id INT IDENTITY NOT NULL, identifiant_type_unite_id INT, identifiant_baie_id INT, identifiant_reservation_id INT, numero INT NOT NULL, status BIT NOT NULL, PRIMARY KEY (id))');
+        $this->addSql('CREATE TABLE unite (id INT IDENTITY NOT NULL, identifiant_type_unite_id INT, identifiant_baie_id INT, identifiant_reservation_id INT, numero VARCHAR(255) NOT NULL, status BIT NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE INDEX IDX_1D64C118F5C9C1FD ON unite (identifiant_type_unite_id)');
         $this->addSql('CREATE INDEX IDX_1D64C11890C0C5E ON unite (identifiant_baie_id)');
         $this->addSql('CREATE INDEX IDX_1D64C1188EE5A183 ON unite (identifiant_reservation_id)');
