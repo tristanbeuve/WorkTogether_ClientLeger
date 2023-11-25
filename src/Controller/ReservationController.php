@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Dto\RegisterDto;
-use App\Dto\ReservationDto;
+use App\Dto\ReservationAboDto;
 use App\Entity\Abonnement;
 use App\Entity\Baie;
 use App\Entity\Renouvellement;
@@ -47,14 +47,16 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/reserver', name: 'app_new_reservation')]
+    #[Route('/reserver', name: 'app_new_abo_reservation')]
     #[IsGranted('ROLE_USER')]
-    public function new(UserRepository $ur, AbonnementRepository $ar, UniteRepository $urr, Request $request, ReservationDto $dto, EntityManagerInterface $em): Response
+    public function newReservationAbo(UserRepository $ur, AbonnementRepository $ar, UniteRepository $urr, Request $request, ReservationAboDto $dto, EntityManagerInterface $em): Response
     {
         $id = $this->getUser()->getId();
         $user = $ur->findOneBy(['id' => $id]);
 
-        $dataReservation = new ReservationDto();
+//        $unite
+
+        $dataReservation = new ReservationAboDto();
         $form = $this->createForm(ReservationType::class, $dataReservation);
         $form->handleRequest($request);
 
@@ -67,7 +69,7 @@ class ReservationController extends AbstractController
 
             $reservation= new Reservation();
             $reservation->setIdentifiantAbonnement($dataReservation->IdentifiantAbonnement);
-            $reservation->setQuantity($dataReservation->quantity);
+            $reservation->setQuantity(1);
             $reservation->setRenAuto($dataReservation->ren_auto);
             $reservation->setRenouvellement($dataReservation->renouvellement);
             if ($dataReservation->renouvellement->getNom() == "Mois"){
@@ -78,7 +80,9 @@ class ReservationController extends AbstractController
             }
             $reservation->setDateEndForm($duration);
             $reservation->setDateDeb();
+            $reservation->setNumero(strtoupper(substr($user->getNom(),0,3)).'ABO'.count($user->getReservations())+1);
 
+            $user->addReservation($reservation);
             $reservation->setCustomer($user);
             $em->persist($reservation);
             $em->flush();
@@ -90,8 +94,40 @@ class ReservationController extends AbstractController
             return $this->redirectToRoute('app_reservation', [
             ]);
         }
-        return $this->render('reservation/new.html.twig', [
+        return $this->render('reservation/newAbo.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+//
+//    #[Route('/reserver', name: 'app_new_unite_reservation')]
+//    #[IsGranted('ROLE_USER')]
+//    public function newReservationUnite(UserRepository $ur, Request $request): Response
+//    {
+//        $id = $this->getUser()->getId();
+//        $user = $ur->findOneBy(['id' => $id]);
+//
+//        $dataReservation = new ReservationAboDto();
+//        $form = $this->createForm(ReservationType::class, $dataReservation);
+//        $form->handleRequest($request);
+//
+//
+////        $abo = $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement();
+////        if ($dataReservation->quantity * $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement()<= $urr->CountUnite(0)) {
+////            $form->addError("Il n'y a pas assez d'unités disponible. Veuillez réessayer plus tard");
+////        }
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//
+//
+//            $this->addFlash(
+//                'reservationSuccess',
+//                "Unités correctement réservé"
+//            );
+//            return $this->redirectToRoute('app_reservation', [
+//            ]);
+//        }
+//        return $this->render('reservation/newUnite.html.twig', [
+//            'form' => $form->createView(),
+//        ]);
+//    }
 }

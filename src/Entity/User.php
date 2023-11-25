@@ -17,11 +17,6 @@ use Symfony\Component\Validator\Constraints\PasswordStrength;
 #[UniqueEntity(fields: ['email'], message: 'Cette adresse email est déjà utilisé')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-//    #[Assert\PasswordStrength([
-//        'minScore' => PasswordStrength::STRENGTH_STRONG, // Very strong password required
-//        'message' => 'Votre mot de passe n\'est pas assez fort.'
-//    ])]
-//    protected $rawPassword;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

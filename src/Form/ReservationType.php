@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Dto\ReservationDto;
+use App\Dto\ReservationAboDto;
 use App\Entity\Abonnement;
 use App\Entity\Renouvellement;
 use App\Entity\Reservation;
@@ -39,7 +39,6 @@ class ReservationType extends AbstractType
 //        'html5' => false,
 //        'attr' => ['class' => 'js-datepicker'],
 //    ])
-            ->add('quantity', null, ['label' => 'Quantité'])
             ->add('renouvellement', EntityType::class, [
                 'class' => Renouvellement::class,
                 'choice_label' => 'nom',
@@ -53,7 +52,7 @@ class ReservationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ReservationDto::class,
+            'data_class' => ReservationAboDto::class,
         ]);
     }
 }

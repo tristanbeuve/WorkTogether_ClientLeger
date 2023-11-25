@@ -2,10 +2,9 @@
 
 namespace App\Dto;
 
-class ReservationDto
+class ReservationAboDto
 {
     public $IdentifiantAbonnement;
-    public $quantity;
     public $renouvellement;
     public $ren_auto;
 

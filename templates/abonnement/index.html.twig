@@ -22,11 +22,11 @@
     {% endif %}
 
     <div class="container d-flex justify-content-end">
-        <a class="btn btn-primary " id="boutonReserver" href="{{ url('app_new_reservation') }}">Choisir un
+        <a class="btn btn-primary " id="boutonReserver" href="{{ url('app_new_abo_reservation') }}">Choisir un
             abonnemment</a>
     </div>
     <div class="container">
-        <div class="row d-flex justify-content-around">
+        <div class="row d-flex justify-content-between">
             {% for abo in abonnements %}
                 <div class="col">
                     <div class="card text-center mb-3" style="width: 20rem;">

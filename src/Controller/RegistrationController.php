@@ -63,4 +63,14 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    #[Route('/register/Conditions', name: 'app_CU')]
+    public function indexCU(): Response
+    {
+
+
+        return $this->render('registration/CU.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
 }

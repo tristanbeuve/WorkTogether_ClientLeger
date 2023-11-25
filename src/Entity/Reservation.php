@@ -45,9 +45,8 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?User $customer = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Unite')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Unite $unite = null;
+    #[ORM\Column]
+    private ?string $numero = null;
 
     public function __construct()
     {
@@ -196,15 +195,16 @@ class Reservation
         return $this;
     }
 
-    public function getUniteId(): ?Unite
+    public function getNumero(): ?string
     {
-        return $this->unite;
+        return $this->numero;
     }
 
-    public function setUniteId(?Unite $unite): static
+    public function setNumero(string $numero): static
     {
-        $this->unite = $unite;
+        $this->numero = $numero;
 
         return $this;
     }
+
 }
