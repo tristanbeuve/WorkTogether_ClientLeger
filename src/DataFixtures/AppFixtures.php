@@ -172,28 +172,56 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
 
-        for ($j = 1; $j <= 3; $j++) {
+
+
+        //Créer des Baies avec des unités reservées
+        for ($j = 1; $j <= 2; $j++) {
             $baie = new Baie();
             $baie->setNbrEmplacement(42); // Valeurs aléatoires pour le nombre d'emplacements
-            $baie->setStatus($faker->boolean); // Statut aléatoire true ou false
+            $baie->setStatus(1);
 
             $manager->persist($baie);
             $manager->flush();
+
 
             // Créez des données de test pour la table "unite"
             for ($k = 1; $k <= 42; $k++) {
                 $unite = new Unite();
                 $unite->setNumero($j . "-" . $k);
-                $unite->setStatus($faker->boolean);
-                $unite->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => $faker->numberBetween(1, $reservationCount)]));
+                $Resa = $manager->getRepository(Reservation::class)->findOneBy(['id' => $faker->numberBetween(1, $reservationCount)]);
+                $unite->setIdentifiantReservation($Resa);
+                $unite->setStatus(1);
+
                 $unite->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => $faker->numberBetween(1, $i - 1)]));
                 $unite->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id'=>$j]));
-
                 $manager->persist($unite);
                 $manager->flush();
             }
 
+        }
 
+        //Créer des baies avec des unitées non-reservées
+        for ($l = 1; $l <= 2; $l++) {
+            $baie = new Baie();
+            $baie->setNbrEmplacement(42); // Valeurs aléatoires pour le nombre d'emplacements
+            $baie->setStatus(0);
+
+            $manager->persist($baie);
+            $manager->flush();
+
+
+            // Créez des données de test pour la table "unite"
+            for ($k = 1; $k <= 42; $k++) {
+                $unite = new Unite();
+                $unite->setNumero($l+$j-1 . "-" . $k);
+                $unite->setIdentifiantReservation($manager->getRepository(Reservation::class)->findOneBy(['id' => $faker->numberBetween(1, $reservationCount)]));
+                $unite->setStatus(0);
+
+                $unite->setIdentifiantTypeUnite($manager->getRepository(TypeUnite::class)->findOneBy(['id' => $faker->numberBetween(1, $i - 1)]));
+                $unite->setIdentifiantBaie($manager->getRepository(Baie::class)->findOneBy(['id'=>$l+$j-1]));
+                $manager->persist($unite);
+                $manager->flush();
+            }
         }
     }
 }
