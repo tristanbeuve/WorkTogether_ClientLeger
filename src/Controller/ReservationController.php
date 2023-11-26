@@ -71,6 +71,7 @@ class ReservationController extends AbstractController
             }
             $reservation->setDateEndForm($duration);
             $reservation->setDateDeb();
+            $reservation->setDelaie(False);
             $reservation->setNumero(strtoupper(substr($user->getNom(), 0, 3)) . 'ABO' . count($user->getReservations()) + 1);
 
             $uniteAboonement =$ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement();

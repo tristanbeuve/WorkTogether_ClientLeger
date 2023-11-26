@@ -48,6 +48,9 @@ class Reservation
     #[ORM\Column]
     private ?string $numero = null;
 
+    #[ORM\Column]
+    private ?bool $Delaie = null;
+
     public function __construct()
     {
         $this->facturations = new ArrayCollection();
@@ -203,6 +206,18 @@ class Reservation
     public function setNumero(string $numero): static
     {
         $this->numero = $numero;
+
+        return $this;
+    }
+
+    public function isDelaie(): ?bool
+    {
+        return $this->Delaie;
+    }
+
+    public function setDelaie(bool $Delaie): static
+    {
+        $this->Delaie = $Delaie;
 
         return $this;
     }

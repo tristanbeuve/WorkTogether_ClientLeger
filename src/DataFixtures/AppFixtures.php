@@ -113,6 +113,7 @@ class AppFixtures extends Fixture
             $randomField = $faker->randomElement(['Mois', 'An']);
             $reservation->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => $randomField]));
             $reservation->setRenAuto($faker->boolean);
+            $reservation->setDelaie(False);
             $reservation->setQuantity(1);
             $user = $manager->getRepository(User::class)->findOneBy(['id' => $h + $i - 1]);
             $reservation->setCustomer($user);
@@ -148,6 +149,7 @@ class AppFixtures extends Fixture
                 $randomField = $faker->randomElement(['Mois', 'An']);
                 $reservation->setRenouvellement($manager->getRepository(Renouvellement::class)->findOneBy(['nom' => $randomField]));
                 $reservation->setRenAuto($faker->boolean);
+                $reservation->setDelaie(False);
                 $reservation->setQuantity(1);
                 $user = $manager->getRepository(User::class)->findOneBy(['id' => $h + $i + $j - 2]);
                 $reservation->setCustomer($user);
