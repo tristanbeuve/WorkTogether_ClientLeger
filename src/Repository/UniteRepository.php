@@ -58,6 +58,7 @@ class UniteRepository extends ServiceEntityRepository
     }
 
 
+
 //    public function findOneBySomeField($value): ?Unite
 //    {
 //        return $this->createQueryBuilder('u')
@@ -67,4 +68,17 @@ class UniteRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findByAbonnement(int $value): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.status = 0')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults($value)
+            //->setParameter(':val', $value)
+
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
