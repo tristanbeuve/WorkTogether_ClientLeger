@@ -100,7 +100,7 @@ class Reservation
 
     public function setDateEndForm( \DateInterval $duration): static
     {
-        $date = new DateTime('now');
+        $date = getDateDeb();
         $dateEnd = $date->add($duration);
         $this->dateEnd = $dateEnd;
 

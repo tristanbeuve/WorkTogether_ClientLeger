@@ -12,6 +12,7 @@ use App\Entity\Unite;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\ReservationType;
+use App\Form\UpdateReservationType;
 use App\Repository\AbonnementRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\UniteRepository;
@@ -114,36 +115,77 @@ class ReservationController extends AbstractController
         ]);
     }
 
-//
-//    #[Route('/reserver', name: 'app_new_unite_reservation')]
-//    #[IsGranted('ROLE_USER')]
-//    public function newReservationUnite(UserRepository $ur, Request $request): Response
-//    {
-//        $id = $this->getUser()->getId();
-//        $user = $ur->findOneBy(['id' => $id]);
-//
-//        $dataReservation = new ReservationAboDto();
-//        $form = $this->createForm(ReservationType::class, $dataReservation);
-//        $form->handleRequest($request);
-//
-//
-////        $abo = $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement();
-////        if ($dataReservation->quantity * $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement()<= $urr->CountUnite(0)) {
-////            $form->addError("Il n'y a pas assez d'unités disponible. Veuillez réessayer plus tard");
-////        }
-//        if ($form->isSubmitted() && $form->isValid()) {
-//
-//
-//
-//            $this->addFlash(
-//                'reservationSuccess',
-//                "Unités correctement réservé"
-//            );
-//            return $this->redirectToRoute('app_reservation', [
-//            ]);
-//        }
-//        return $this->render('reservation/newUnite.html.twig', [
-//            'form' => $form->createView(),
-//        ]);
-//    }
+    #[Route('/reservation/update/{idReservation}', name: 'app_update_reservation')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function updateReservation(EntityManagerInterface $em, UserRepository $ur, Request $request, int $idReservation, ReservationRepository $rr, AbonnementRepository $ar, UniteRepository $urr)
+    {
+        $id = $this->getUser()->getId();
+        $user = $ur->findOneBy(['id' => $id]);
+
+        $reservation = $rr->find($idReservation);
+        $dataReservation = new ReservationAboDto();
+        $dataReservation->renouvellement = $reservation->getRenouvellement();
+        $dataReservation->ren_auto = $reservation->isRenAuto();
+        $form = $this->createForm(UpdateReservationType::class, $dataReservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $reservation->setRenouvellement($dataReservation->renouvellement);
+            $dateDebReseravtion = $reservation->getDateDeb();
+            if ($dataReservation->renouvellement->getNom() == "Mois") {
+                $duration = new \DateInterval("P1M");
+            }
+            if ($dataReservation->renouvellement->getNom() == 'An') {
+                $duration = new \DateInterval("P1Y");
+            }
+
+            $reservation->setDateEnd($reservation->getDateEnd()->add($duration));
+            $reservation->setRenAuto($dataReservation->ren_auto);
+
+            $reservation->setIdentifiantAbonnement($dataReservation->IdentifiantAbonnement);
+
+
+            $uniteAboonement = $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement();
+            $unites = $urr->findByAbonnement($uniteAboonement);
+            if (
+                count($unites) != $uniteAboonement
+            ) {
+                $form->addError(new FormError("Il n'y a pas assez d'unités disponible. Veuillez réessayer plus tard"));
+            }
+            if ($form->isValid()) {
+
+                $user->addReservation($reservation);
+                $reservation->setCustomer($user);
+
+                foreach ($unites as $unite) {
+                    $reservation->addUnite($unite);
+                    $unite->setStatus(1);
+                    $em->persist($reservation);
+                    $em->flush();
+
+                }
+                $this->addFlash(
+                    'reservationSuccess',
+                    "Abonnement a été correctement modifié"
+                );
+                return $this->redirectToRoute('app_reservation', [
+                ]);
+
+            }
+
+            $this->addFlash(
+                'reservationFails',
+                "Abonnement n'a pas pus être réservé"
+            );
+            return $this->redirectToRoute('app_abonnement', [
+            ]);
+        }
+        return $this->render('reservation/updateAbo.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
 }
