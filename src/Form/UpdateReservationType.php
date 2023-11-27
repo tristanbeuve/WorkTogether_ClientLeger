@@ -20,12 +20,13 @@ class UpdateReservationType extends AbstractType
             ->add('IdentifiantAbonnement', EntityType::class, [
                 'class' => Abonnement::class,
                 'choice_label'=>'nom',
+                'label'=>'Abonnement :'
             ])
             ->add('renouvellement', EntityType::class, [
                 'class' => Renouvellement::class,
                 'choice_label' => 'nom',
-                'label' => 'Type de Renouvellement',
-            ])->add('ren_auto',CheckboxType::class, ['label'=>'Renouvellement Automatique'])
+                'label' => 'Type de Renouvellement :',
+            ])->add('ren_auto',CheckboxType::class, ['label'=>'Renouvellement Automatique :'])
             ->add('submit', SubmitType::class, ['label' => 'Réserver'])
         ;
     }

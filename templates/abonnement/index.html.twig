@@ -48,8 +48,7 @@
                                     {% set reduc = (abo.reduction/100) * abo.prix %}
                                     {% set prix = abo.prix - reduc %}
                                     <dd>
-                                        <strike style="color: red;">{{ abo.prix }} €/mois</strike> | {{ prix }}
-                                        €/mois
+                                        <p><s style="color: red;">{{ abo.prix }} €/mois</s> | {{ prix }} €/mois</p>
                                     </dd>
                                 {% else %}
                                     <dd>{{ abo.prix }} €/mois</dd>

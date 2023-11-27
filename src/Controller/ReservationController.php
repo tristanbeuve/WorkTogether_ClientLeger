@@ -14,6 +14,7 @@ use App\Form\RegistrationFormType;
 use App\Form\ReservationType;
 use App\Form\UpdateReservationType;
 use App\Repository\AbonnementRepository;
+use App\Repository\BaieRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\UniteRepository;
 use App\Repository\UserRepository;
@@ -117,7 +118,7 @@ class ReservationController extends AbstractController
 
     #[Route('/reservation/update/{idReservation}', name: 'app_update_reservation')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function updateReservation(EntityManagerInterface $em, UserRepository $ur, Request $request, int $idReservation, ReservationRepository $rr, AbonnementRepository $ar, UniteRepository $urr)
+    public function updateReservation(EntityManagerInterface $em, BaieRepository $br ,UserRepository $ur, Request $request, int $idReservation, ReservationRepository $rr, AbonnementRepository $ar, UniteRepository $urr)
     {
         $id = $this->getUser()->getId();
         $user = $ur->findOneBy(['id' => $id]);
@@ -146,10 +147,10 @@ class ReservationController extends AbstractController
             $reservation->setIdentifiantAbonnement($dataReservation->IdentifiantAbonnement);
 
 
-            $uniteAboonement = $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement])->getNbrEmplacement();
-            $unites = $urr->findByAbonnement($uniteAboonement);
+            $uniteAboonement = $ar->findOneBy(['id' => $dataReservation->IdentifiantAbonnement]);
+            $unites = $urr->findByAbonnement($uniteAboonement->getNbrEmplacement());
             if (
-                count($unites) != $uniteAboonement
+                count($unites) != $uniteAboonement->getNbrEmplacement() && $uniteAboonement->getNom() != $reservation->getIdentifiantAbonnement()->getNom()
             ) {
                 $form->addError(new FormError("Il n'y a pas assez d'unités disponible. Veuillez réessayer plus tard"));
             }
@@ -163,8 +164,16 @@ class ReservationController extends AbstractController
                     $unite->setStatus(1);
                     $em->persist($reservation);
                     $em->flush();
-
                 }
+
+
+
+//                $baie = $br->findOneBy(['id'=>$unite->getId()]);
+//
+//                if (){
+//                    //Baie de l'unité status 1
+//                }
+
                 $this->addFlash(
                     'reservationSuccess',
                     "Abonnement a été correctement modifié"
