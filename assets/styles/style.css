@@ -27,7 +27,6 @@ body {
 }
 
 .navi {
-    position: static;
     font-family: 'Raleway', sans-serif;
     font-weight: 500;
 }
@@ -57,4 +56,10 @@ body {
 
 #boutonReserver{
     margin-bottom: 2em;
+}
+
+h5.gras >ul > li{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    margin-top: 32px;
 }

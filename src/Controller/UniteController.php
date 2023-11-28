@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Baie;
 use App\Entity\Unite;
 use App\Form\UniteType;
+use App\Repository\ReservationRepository;
 use App\Repository\UniteRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,10 +19,10 @@ use App\Repository\BaieRepository;
 class UniteController extends AbstractController
 {
     #[Route('/unite', name: 'app_unite')]
-    public function index(EntityManagerInterface $em, BaieRepository $br, UniteRepository $ur): Response
+    public function index(ReservationRepository $rr, BaieRepository $br, UniteRepository $urr, UserRepository $ur): Response
     {
         $baiesLibre=$br->CountBaie(0);
-        $unitesLibre=$ur->CountUnite(0);
+        $unitesLibre=$urr->CountUnite(0);
 
         return $this->render('unite/index.html.twig', [
             'baiesLibre'=>$baiesLibre,

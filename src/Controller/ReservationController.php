@@ -113,6 +113,7 @@ class ReservationController extends AbstractController
         }
         return $this->render('reservation/newAbo.html.twig', [
             'form' => $form->createView(),
+
         ]);
     }
 

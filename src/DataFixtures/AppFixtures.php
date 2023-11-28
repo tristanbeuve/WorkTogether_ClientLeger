@@ -88,6 +88,16 @@ class AppFixtures extends Fixture
         }
         $manager->flush();
 
+        $admin = new User();
+        $admin->setPassword($this->hasher->hashPassword($client, "vv83Bd^Jo!!6h^m%Lbn5"));
+        $admin->setEmail("admin@admin.com");
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setNom("Beuve");
+        $admin->setPrenom("Tristan");
+        $manager->persist($admin);
+        $manager->flush();
+
+
         $reservationCount = 0;
 
         // Créez des utilisateurs qui ont réserver 1 abonnement
