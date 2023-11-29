@@ -46,7 +46,8 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/reserver', name: 'app_new_abo_reservation')]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('ROLE_CUSTOMER')]
+
     public function newReservationAbo(UserRepository $ur, AbonnementRepository $ar, UniteRepository $urr, Request $request, ReservationAboDto $dto, EntityManagerInterface $em): Response
     {
         $id = $this->getUser()->getId();
@@ -142,7 +143,7 @@ class ReservationController extends AbstractController
                 $duration = new \DateInterval("P1Y");
             }
 
-            $reservation->setDateEnd($reservation->getDateEnd()->add($duration));
+            $reservation->setDateEnd($reservation->getDateDeb()->add($duration));
             $reservation->setRenAuto($dataReservation->ren_auto);
 
             $reservation->setIdentifiantAbonnement($dataReservation->IdentifiantAbonnement);
@@ -163,6 +164,11 @@ class ReservationController extends AbstractController
                 foreach ($unites as $unite) {
                     $reservation->addUnite($unite);
                     $unite->setStatus(1);
+                    $baie = $br->findOneBy(['id'=>$unite->getIdentifiantBaie()]);
+                    if ($unite->getId()%42 == 0 ){
+                        $baie->setStatus(1);
+                    }
+                    if ($unite)
                     $em->persist($reservation);
                     $em->flush();
                 }

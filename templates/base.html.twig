@@ -63,6 +63,52 @@
             </div>
         </div>
     </nav>
+{#    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+{#        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"#}
+{#             aria-labelledby="offcanvasExampleLabel">#}
+{#            <div class="offcanvas-header text-bg-dark">#}
+{#                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Profil</h5>#}
+{#                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+{#            </div>#}
+
+{#            <div class="offcanvas-body">#}
+{#                <div class="container">#}
+{#                    <div class="row mt-5">#}
+{#                        <div class="col-md-6 offset-md-3">#}
+{#                            <h1>{{ user.prenom }} {{ user.nom }}</h1>#}
+{#                        </div>#}
+{#                        <h2>Informations Personnels</h2>#}
+{#                        <p>Email : {{ user.email }}<a class="btn" href="#"><i class="bi bi-pencil-square"></i></a>#}
+{#                        </p>#}
+{#                        <p>Mot de passe <a class="btn" href="#"><i class="bi bi-pencil-square"></i></a></p>#}
+
+{#                        <h2>Informations Pratiques</h2>#}
+{#                        {% if countRes != 0 %}#}
+{#                        <p>Nombre de reservation : {{ countRes }}</p>#}
+{#                        <ul class="list-group list-group-flush">#}
+{#                            {% set i = 1 %}#}
+{#                            {% for res in reservations %}#}
+{#                                <li class="gras d-flex justify-content-center">Reservation n°{{ i }}</li>#}
+{#                                <li class="list-group-item">#}
+{#                                    {{ res.numero }}#}
+{#                                </li>#}
+{#                                <li class="list-group-item">#}
+{#                                    {{ res.IdentifiantAbonnement.nom }}#}
+{#                                </li>#}
+{#                                <br/>#}
+{#                                {% set i=i+1 %}#}
+{#                            {% endfor %}#}
+{#                            <a class="btn btn-link" href="{{ url("app_reservation") }}">Voir Plus</a>#}
+{#                            {% endif %}#}
+{#                            <p>Vous n'avez pas encore de reservation</p>#}
+{#                            <a class="btn btn-link" href="{{ url("app_abonnement") }}">S'abonner</a>#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#</div>#}
     {% endif %}
 
     {% block body %}{% endblock %}

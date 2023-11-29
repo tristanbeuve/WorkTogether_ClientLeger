@@ -46,6 +46,7 @@ class RegistrationController extends AbstractController
             );
             $user->setNom($dataUser->nom);
             $user->setPrenom($dataUser->prenom);
+            $user->setRoles(['ROLE_CUSTOMER']);
 
             $entityManager->persist($user);
             $entityManager->flush();

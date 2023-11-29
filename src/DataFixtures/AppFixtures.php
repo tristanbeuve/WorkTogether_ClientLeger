@@ -67,7 +67,7 @@ class AppFixtures extends Fixture
         $abonnement3 = new Abonnement();
         $abonnement3->setNom('Abonnement Entreprise');
         $abonnement3->setPrix(199.99);
-        $abonnement3->setNbrEmplacement(50);
+        $abonnement3->setNbrEmplacement(40);
         $abonnement3->setReduction(20); // 20% de réduction
         $abonnement3->setImgPath("Entreprise.webp");
         $abonnement3->setDescription("Un abonnement idéal pour les grandes entreprises avec des besoins de haute performance et un stockage de données intensif.");
@@ -76,20 +76,9 @@ class AppFixtures extends Fixture
         // Flush pour enregistrer les objets
         $manager->flush();
 
-
-        //Créer des utilisateurs qui n'ont pas de reservation
-        for ($h = 1; $h <= 5; $h++) {
-            $client = new User();
-            $client->setNom($faker->lastName);
-            $client->setPrenom($faker->firstName);
-            $client->setEmail($faker->email);
-            $client->setPassword($this->hasher->hashPassword($client, '123456789'));
-            $manager->persist($client);
-        }
-        $manager->flush();
-
+        //Créer un Utilisateur ADMIN
         $admin = new User();
-        $admin->setPassword($this->hasher->hashPassword($client, "vv83Bd^Jo!!6h^m%Lbn5"));
+        $admin->setPassword($this->hasher->hashPassword($admin, "vv83Bd^Jo!!6h^m%Lbn5"));
         $admin->setEmail("admin@admin.com");
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setNom("Beuve");
@@ -97,7 +86,17 @@ class AppFixtures extends Fixture
         $manager->persist($admin);
         $manager->flush();
 
-
+        //Créer des utilisateurs qui n'ont pas de reservation
+        for ($h = 1; $h <= 4; $h++) {
+            $client = new User();
+            $client->setNom($faker->lastName);
+            $client->setPrenom($faker->firstName);
+            $client->setEmail($faker->email);
+            $client->setRoles(['ROLE_CUSTOMER']);
+            $client->setPassword($this->hasher->hashPassword($client, '123456789'));
+            $manager->persist($client);
+        }
+        $manager->flush();
         $reservationCount = 0;
 
         // Créez des utilisateurs qui ont réserver 1 abonnement
@@ -106,6 +105,7 @@ class AppFixtures extends Fixture
             $client->setNom($faker->lastName);
             $client->setPrenom($faker->firstName);
             $client->setEmail($faker->email);
+            $client->setRoles(['ROLE_CUSTOMER']);
             $client->setPassword($this->hasher->hashPassword($client, '123456789'));
             $manager->persist($client);
 
@@ -125,7 +125,7 @@ class AppFixtures extends Fixture
             $reservation->setRenAuto($faker->boolean);
             $reservation->setDelaie(False);
             $reservation->setQuantity(1);
-            $user = $manager->getRepository(User::class)->findOneBy(['id' => $h + $i - 1]);
+            $user = $manager->getRepository(User::class)->findOneBy(['id' => $h + $i ]);
             $reservation->setCustomer($user);
             $randomField = $faker->randomElement([49, 99, 199]);
             $reservation->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => $randomField]));
@@ -142,6 +142,7 @@ class AppFixtures extends Fixture
             $client->setNom($faker->lastName);
             $client->setPrenom($faker->firstName);
             $client->setEmail($faker->email);
+            $client->setRoles(['ROLE_CUSTOMER']);
             $client->setPassword($this->hasher->hashPassword($client, '123456789'));
             $manager->persist($client);
             $manager->flush();
@@ -161,7 +162,7 @@ class AppFixtures extends Fixture
                 $reservation->setRenAuto($faker->boolean);
                 $reservation->setDelaie(False);
                 $reservation->setQuantity(1);
-                $user = $manager->getRepository(User::class)->findOneBy(['id' => $h + $i + $j - 2]);
+                $user = $manager->getRepository(User::class)->findOneBy(['id' => $h + $i + $j -1]);
                 $reservation->setCustomer($user);
                 $randomField = $faker->randomElement([49, 99, 199]);
                 $reservation->setIdentifiantAbonnement($manager->getRepository(Abonnement::class)->findOneBy(['prix' => $randomField]));
