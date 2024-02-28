@@ -30,3 +30,6 @@ App\Dto\RegisterDto:
     prenom:
       - NotBlank:
           message: "Veuillez remplir ce champs."
+#    dateNaiss:
+#      - NotBlank:
+#          message: "Veuillez remplir ce champs."

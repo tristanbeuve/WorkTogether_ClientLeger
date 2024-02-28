@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Dto\RegisterDto;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use Cassandra\Date;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Timezone;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -32,7 +35,7 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $dataUser);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $user = new User();
 //            dump($user);
 
@@ -48,14 +51,26 @@ class RegistrationController extends AbstractController
             $user->setPrenom($dataUser->prenom);
             $user->setRoles(['ROLE_CUSTOMER']);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
 
-            $this->addFlash(
-                'compteSuccess',
-                "Votre compte a bien été créé"
-            );
+
+
+
+
+            if ($form->isValid()){
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash(
+                    'compteSuccess',
+                    "Votre compte a bien été créé"
+                );
+            }
+            else{
+                $this->addFlash(
+                    'compteFail',
+                    "Votre compte n'a pas pu être créé"
+                );
+            }
             return $this->redirectToRoute('home', [
             ]);
         }

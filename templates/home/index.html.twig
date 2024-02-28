@@ -6,7 +6,12 @@
 
 {% block body %}
     {% for message in app.flashes('compteSuccess') %}
-        <div class="alert alert-success justify-content-center" role="alert">
+        <div class="alert alert-success justify-content-center " role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('compteFail') %}
+        <div class="alert alert-danger justify-content-center " role="alert">
             {{ message }}
         </div>
     {% endfor %}

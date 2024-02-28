@@ -47,7 +47,6 @@ class ReservationController extends AbstractController
 
     #[Route('/reserver', name: 'app_new_abo_reservation')]
     #[IsGranted('ROLE_CUSTOMER')]
-
     public function newReservationAbo(UserRepository $ur, AbonnementRepository $ar, UniteRepository $urr, Request $request, ReservationAboDto $dto, EntityManagerInterface $em): Response
     {
         $id = $this->getUser()->getId();

@@ -14,10 +14,9 @@ body {
     justify-content: center;
     align-items: center;
     background-image: url("../../public/img/bg.jpg");
-    /* Chemin de l'image de fond */
-     background-size: cover;
-     background-position: center;
-     height: 100vh;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
     color: white;
     text-shadow: #000000 2px 2px 2px;
 }

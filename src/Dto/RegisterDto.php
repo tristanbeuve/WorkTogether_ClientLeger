@@ -2,6 +2,7 @@
 
 namespace App\Dto;
 
+
 class RegisterDto
 {
 
@@ -9,6 +10,7 @@ class RegisterDto
     public $password;
     public $prenom;
     public $nom;
+    public $dateNaiss;
     public $agreeTerms;
     public $passwordConfirmation;
 }

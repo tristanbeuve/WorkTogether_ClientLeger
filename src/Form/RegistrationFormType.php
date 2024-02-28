@@ -7,13 +7,10 @@ use App\Entity\User;
 use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -28,12 +25,15 @@ class RegistrationFormType extends AbstractType
                 "label" => "J'accepte les Condition d'utilisations",
             ])
             ->add('password', PasswordType::class, [
-                "label" => "Mot de passe",
+                "label" => "Mot de passe :",
                 'attr' => ['autocomplete' => 'new-password'],
             ])
             ->add('passwordConfirmation', PasswordType::class, [
-                "label"=>'Confirmation du mot de passe',
+                "label"=>'Confirmation du mot de passe :',
             ])
+//                ->add('dateNaiss',DateType::class,[
+//                "label" => "Date de Naissance :",
+//            ])
         ;
     }
 
