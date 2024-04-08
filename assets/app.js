@@ -9,5 +9,4 @@
 import "./styles/app.css";
 import "./styles/style.css";
 import "bootstrap/dist/js/bootstrap.min";
-import "./scripts/script.js";
 import "@fortawesome/fontawesome-free/js/all.min";
