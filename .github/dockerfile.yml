@@ -1,0 +1,18 @@
+# This is a basic workflow that is manually triggered
+
+name: dockerfile
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: create dockerfile
+      run: docker build . -t worktogether-app:latest
+    
