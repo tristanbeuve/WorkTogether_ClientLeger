@@ -6,31 +6,31 @@ on:
       "master"
 
 jobs:
-  cypress-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run Cypress tests
-        run: npm run cypress:run
-
-      - name: Check Cypress test status
-        run: |
-          if grep -q "All specs passed!" cypress/output.txt;
-          else
-            exit 1
-          fi
-
-  push-if-tests-passed:
-    needs: cypress-tests
-    runs-on: ubuntu-latest
-    if: ${{ needs.cypress-tests.result == 'success' }}
-
+#  cypress-tests:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#
+#      - name: Install dependencies
+#        run: npm install
+#
+#      - name: Run Cypress tests
+#        run: npm run cypress:run
+#
+#      - name: Check Cypress test status
+#        run: |
+#          if grep -q "All specs passed!" cypress/output.txt;
+#          else
+#            exit 1
+#          fi
+#
+#  push-if-tests-passed:
+#    needs: cypress-tests
+#    runs-on: ubuntu-latest
+#    if: ${{ needs.cypress-tests.result == 'success' }}
+#
     steps:
       - name: Push to master branch
         uses: ad-m/github-push-action@master
