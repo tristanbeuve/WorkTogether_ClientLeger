@@ -5,12 +5,16 @@ App\Dto\RegisterDto:
           message: "Veuillez remplir ce champs."
       - Email:
           message: "L'email {{ value }} n'est pas valide."
+      - Type:
+          type: string
     password:
       - NotBlank:
           message: "Veuillez remplir ce champs"
       - NotEqualTo:
           propertyPath: email
           message: "Votre mot de passe ne doit pas être votre adresse email"
+      - Type:
+          type: password
       - Length:
           min: 8
           max: 4096
@@ -18,18 +22,26 @@ App\Dto\RegisterDto:
     agreeTerms:
       - IsTrue:
           message: "Vous devez accepter les Conditions d'utilisation"
+      - Type:
+          type: string
     passwordConfirmation:
       - NotBlank:
           message: "Veuillez remplir ce champs."
+      - Type:
+          type: password
       - EqualTo:
           propertyPath: password
           message: "La confirmation ne correspond pas à votre mot de passe"
     nom:
       - NotBlank:
           message: "Veuillez remplir ce champs."
+      - Type:
+          type: string
     prenom:
       - NotBlank:
           message: "Veuillez remplir ce champs."
+      - Type:
+          type: string
 #    dateNaiss:
 #      - NotBlank:
 #          message: "Veuillez remplir ce champs."

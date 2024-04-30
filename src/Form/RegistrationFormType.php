@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Dto\RegisterDto;
-use App\Entity\User;
-use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -18,16 +16,12 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('nom', null, ['label'=>'Nom :'])
             ->add('prenom', null, ['label'=>'Prénom :'])
-            ->add('email', null, [  
-                "label" => "Email :",
-            ])
+            ->add('email', null, [ "label" => "Email :"])
             ->add('agreeTerms', CheckboxType::class, [
                 "label" => "J'accepte les Condition d'utilisations",
             ])
             ->add('password', PasswordType::class, [
-                "label" => "Mot de passe :",
-                'attr' => ['autocomplete' => 'new-password'],
-            ])
+                "label"=>'Mot de passe :'])
             ->add('passwordConfirmation', PasswordType::class, [
                 "label"=>'Confirmation du mot de passe :',
             ])

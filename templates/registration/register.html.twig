@@ -5,9 +5,13 @@
 {% set isSecurityPage = true %}
 
 {% block body %}
+    {% for message in app.flashes('compteFail') %}
+        <div class="alert alert-danger justify-content-center " role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container mt-5">
         <div class="col-md-6 offset-md-3">
-            {#            <img src="/img/logo.png"> #}
             <h1 class="mb-4">Créer un Compte</h1>
 
             {{ form_errors(registrationForm) }}

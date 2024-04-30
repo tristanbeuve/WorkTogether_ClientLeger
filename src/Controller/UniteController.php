@@ -21,8 +21,13 @@ class UniteController extends AbstractController
     #[Route('/unite', name: 'app_unite')]
     public function index(ReservationRepository $rr, BaieRepository $br, UniteRepository $urr, UserRepository $ur): Response
     {
-        $baiesLibre=$br->CountBaie(0);
         $unitesLibre=$urr->CountUnite(0);
+        if ($unitesLibre==0){
+            $baiesLibre=0;
+        }
+        else{
+        $baiesLibre=$br->CountBaie(0);
+        }
 
         return $this->render('unite/index.html.twig', [
             'baiesLibre'=>$baiesLibre,

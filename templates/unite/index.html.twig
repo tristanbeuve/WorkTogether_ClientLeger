@@ -21,8 +21,11 @@
             {% else %}
             Unité
             {% endif %}de libres </h3>
+        {% if unitesLibre >=1 %}
         <h3 class="h3">Alors profitez-en !</h3>
-
+        {% else %}
+        <h3 class="h3">Restez aux agêts, de nouvelles baies pourraient arriver !</h3>
+        {% endif %}
         <h5 class="lead">Baies de Stockage : Votre Solution de Stockage de Données</h5>
         <p class="intro lead">Les baies de stockage sont des dispositifs de stockage de données essentiels pour les
             entreprises

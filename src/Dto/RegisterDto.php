@@ -6,11 +6,11 @@ namespace App\Dto;
 class RegisterDto
 {
 
-    public $email;
+    public string $email;
     public $password;
-    public $prenom;
-    public $nom;
-    public $dateNaiss;
+    public string $prenom;
+    public string $nom;
+//    public $dateNaiss;
     public $agreeTerms;
     public $passwordConfirmation;
 }

@@ -38,23 +38,24 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted()) {
             $user = new User();
 //            dump($user);
+            if (!$dataUser->agreeTerms && $dataUser->password == $dataUser->passwordConfirmation){
+                $this->addFlash(
+                    'compteFail',
+                    "Vous devez accepter les conditions d'utilisations"
+                );
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
 
             $user->setEmail($dataUser->email);
             // encode the plain password
             $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $dataUser->password
-                )
+                $userPasswordHasher->hashPassword($user,$dataUser->password)
             );
             $user->setNom($dataUser->nom);
             $user->setPrenom($dataUser->prenom);
             $user->setRoles(['ROLE_CUSTOMER']);
-
-
-
-
-
 
             if ($form->isValid()){
 
@@ -70,6 +71,9 @@ class RegistrationController extends AbstractController
                     'compteFail',
                     "Votre compte n'a pas pu être créé"
                 );
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
             }
             return $this->redirectToRoute('home', [
             ]);

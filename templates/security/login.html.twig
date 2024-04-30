@@ -21,13 +21,19 @@
             <div class="col-md-6 offset-md-3">
                 <h1 class="h3 mb-3 font-weight-normal">Se Connecter</h1>
 
-                <label for="username" class="sr-only">Email</label>
-                <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control"
-                       autocomplete="email" required autofocus>
+                <div class="mb-3">
+                    <h2 class="h6">Email</h2>
+                    <label for="username" class="sr-only">Email</label>
+                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control"
+                           autocomplete="email" required autofocus>
+                </div>
 
+                <div class="mb-3">
+                    <h2 class="h6">Mot de passe</h2>
                 <label for="password" class="sr-only">Mot de passe</label>
                 <input type="password" name="_password" id="password" class="form-control"
                        autocomplete="current-password" required>
+                </div>
 
                 <input type="hidden" name="_csrf_token"
                        value="{{ csrf_token('authenticate') }}">
