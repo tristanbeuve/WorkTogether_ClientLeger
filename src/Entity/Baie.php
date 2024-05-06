@@ -24,6 +24,9 @@ class Baie
     #[ORM\OneToMany(mappedBy: 'IdentifiantBaie', targetEntity: Unite::class)]
     private Collection $unites;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Numero = null;
+
     public function __construct()
     {
         $this->unites = new ArrayCollection();
@@ -84,6 +87,18 @@ class Baie
                 $unite->setIdentifiantBaie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->Numero;
+    }
+
+    public function setNumero(string $Numero): static
+    {
+        $this->Numero = $Numero;
 
         return $this;
     }

@@ -190,6 +190,7 @@ class AppFixtures extends Fixture
         //Créer des Baies avec des unités reservées
         for ($j = 1; $j <= 2; $j++) {
             $baie = new Baie();
+            $baie->setNumero("B".sprintf("%03d", $j));
             $baie->setNbrEmplacement(42); // Valeurs aléatoires pour le nombre d'emplacements
             $baie->setStatus(1);
 
@@ -216,6 +217,7 @@ class AppFixtures extends Fixture
         //Créer des baies avec des unitées non-reservées
         for ($l = 1; $l <= 2; $l++) {
             $baie = new Baie();
+            $baie->setNumero("B".sprintf("%03d", $j+$l-1));
             $baie->setNbrEmplacement(42); // Valeurs aléatoires pour le nombre d'emplacements
             $baie->setStatus(0);
 
